@@ -25,7 +25,6 @@ class Generator
         $configuration = Yaml::parse(file_get_contents($file));
 
         $book = new Book($configuration['book']);
-
         foreach ($configuration['pages'] as $page) {
             foreach ($this->pageTypes as $pageType) {
                 if ($pageType->handles($page)) {

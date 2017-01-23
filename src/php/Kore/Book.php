@@ -6,9 +6,10 @@ use Kore\DataObject\DataObject;
 
 class Book extends DataObject
 {
-    public $title;
+    public $title = 'New Photo Book';
     public $baseDir;
     public $format;
+    public $production = false;
     public $pages = [];
 
     public function __construct(array $properties = array())
