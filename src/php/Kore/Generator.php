@@ -6,12 +6,15 @@ use Symfony\Component\Yaml\Yaml;
 
 class Generator
 {
+    private $imageHandler;
+
     private $pageTypes = [];
 
-    public function __construct(array $pageTypes = [])
+    public function __construct(ImageHandler $imageHandler = null, array $pageTypes = [])
     {
+        $this->imageHandler = $imageHandler ?: new ImageHandler();
         $this->pageTypes = $pageTypes ?: [
-            new Page\Photo(),
+            new Page\Photo($this->imageHandler),
         ];
     }
 
@@ -25,6 +28,11 @@ class Generator
         $configuration = Yaml::parse(file_get_contents($file));
 
         $book = new Book($configuration['book']);
+        if (!$book->production) {
+            $this->imageHandler->setDpi(90);
+            $this->imageHandler->setQuality(80);
+        }
+
         foreach ($configuration['pages'] as $page) {
             foreach ($this->pageTypes as $pageType) {
                 if ($pageType->handles($page)) {
