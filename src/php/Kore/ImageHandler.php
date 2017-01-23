@@ -2,6 +2,8 @@
 
 namespace Kore;
 
+use \stojg\crop\CropBalanced;
+
 class ImageHandler
 {
     /**
@@ -35,35 +37,13 @@ class ImageHandler
         $imagick = new \Imagick($path);
         $imagick->setImageCompressionQuality($this->quality);
 
-        $inputRatio = $imagick->getImageWidth() / $imagick->getImageHeight();
-        $outputRatio = $width / $height;
-
-        $scaleFactor = $inputRatio / $outputRatio;
-        if ($inputRatio > $outputRatio) {
-            $imagick->cropImage(
-                $imagick->getImageWidth() / $scaleFactor,
-                $imagick->getImageHeight(),
-                ($imagick->getImageWidth() - ($imagick->getImageWidth() / $scaleFactor)) / 2,
-                0
-            );
-        } elseif ($outputRatio > $inputRatio) {
-            $imagick->cropImage(
-                $imagick->getImageWidth(),
-                $imagick->getImageHeight() * $scaleFactor,
-                0,
-                ($imagick->getImageHeight() - ($imagick->getImageHeight() * $scaleFactor)) / 2
-            );
-        }
-
-        $imagick->resizeImage(
+        $cropper = new CropBalanced($path);
+        $cropped = $cropper->resizeAndCrop(
             $width * 0.0393701 * $this->dpi,
-            $height * 0.0393701 * $this->dpi,
-            \Imagick::FILTER_LANCZOS,
-            1,
-            true
+            $height * 0.0393701 * $this->dpi
         );
 
-        $imagick->writeImage($target);
+        $cropped->writeImage($target);
         return $target;
     }
 }

@@ -2,7 +2,8 @@
     "require": {
         "symfony/yaml": "^3.2",
         "kore/data-object": "@stable",
-        "twig/twig": "^2.1"
+        "twig/twig": "^2.1",
+        "stojg/crop": "^1.2"
     },
     "autoload": {
         "psr-4": { "": "src/php" }
