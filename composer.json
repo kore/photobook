@@ -1,0 +1,12 @@
+{
+    "require": {
+        "symfony/yaml": "^3.2",
+        "kore/data-object": "@stable"
+    },
+    "autoload": {
+        "psr-4": { "": "src/php" }
+    },
+    "autoload-dev": {
+        "psr-4": { "": "test/php/" }
+    }
+}

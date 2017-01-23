@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+namespace Kore;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+if ($argc < 2) {
+    echo "Usage: ", $argv[0], " <config> [<output>]", PHP_EOL;
+    exit(64);
+}
+
+$target = $argv[2] ?? $argv[1] . '.pdf';
+
+$generator = new Generator();
+$book = $generator->fromYamlFile($argv[1]);
+echo "Writing ", $target, PHP_EOL;
+file_put_contents($target, $generator->getPdf($book));
+
