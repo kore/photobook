@@ -8,13 +8,19 @@ class Generator
 {
     private $imageHandler;
 
+    private $templateHandler;
+
     private $pageTypes = [];
 
-    public function __construct(ImageHandler $imageHandler = null, array $pageTypes = [])
-    {
+    public function __construct(
+        ImageHandler $imageHandler = null,
+        TemplateHandler $templateHandler = null,
+        array $pageTypes = []
+    ) {
         $this->imageHandler = $imageHandler ?: new ImageHandler();
+        $this->templateHandler = $templateHandler ?: new TemplateHandler();
         $this->pageTypes = $pageTypes ?: [
-            new Page\Photo($this->imageHandler),
+            new Page\Photo($this->templateHandler, $this->imageHandler),
         ];
     }
 
