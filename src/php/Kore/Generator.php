@@ -39,8 +39,22 @@ class Generator
         return $book;
     }
 
-    public function getPdf(Book $book)
+    public function writePdf(Book $book, $targetFile)
     {
-        return null;
+        $dpi = $book->production ? 300 : 90;
+        foreach ($book->pages as $page) {
+            if ($page->svg && !$page->pdf) {
+                $page->pdf = $page->svg . '.pdf';
+                exec("inkscape --export-dpi=$dpi --export-area-page --export-pdf={$page->pdf} {$page->svg}");
+                unlink($page->svg);
+            }
+        }
+
+        exec("pdftk " . implode(' ', array_map(
+            function (Book\Page $page) {
+                return $page->pdf;
+            },
+            $book->pages)) . " cat output " . $targetFile
+        );
     }
 }

@@ -48,21 +48,20 @@ class Photo extends Page
             $data['offsetY'] = -($data['actualHeight'] - $data['height']) / 2;
         }
 
-        $svg = str_replace(
-            array_map(
-                function (string $key) {
-                    return '{' . $key . '}';
-                },
-                array_keys($data)
-            ),
-            array_values($data),
-            file_get_contents(__DIR__ . '/Photo/template.svg')
-        );
         file_put_contents(
-            __DIR__ . '/../../../../var/cache/' . $mixed . '.svg',
-            $svg
+            $svgFile = __DIR__ . '/../../../../var/cache/' . $mixed . '.svg',
+            str_replace(
+                array_map(
+                    function (string $key) {
+                        return '{' . $key . '}';
+                    },
+                    array_keys($data)
+                ),
+                array_values($data),
+                file_get_contents(__DIR__ . '/Photo/template.svg')
+            )
         );
 
-        return new Book\Page();
+        return new Book\Page(['svg' => $svgFile]);
     }
 }

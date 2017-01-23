@@ -6,4 +6,6 @@ use Kore\DataObject\DataObject;
 
 class Page extends DataObject
 {
+    public $svg;
+    public $pdf;
 }
