@@ -30,7 +30,7 @@ class ImageHandler
     {
         $hash = md5(json_encode([$this->dpi, $this->quality, $path, $width, $height]));
         $target = __DIR__ . '/../../../var/cache/' . $hash . '.jpeg';
-        if (false && file_exists($target)) {
+        if (file_exists($target)) {
             return $target;
         }
 
