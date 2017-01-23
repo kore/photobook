@@ -56,9 +56,9 @@ class Generator
     public function writePdf(Book $book, $targetFile)
     {
         $dpi = $book->production ? 300 : 90;
-        foreach ($book->pages as $page) {
+        foreach ($book->pages as $nr => $page) {
             if ($page->svg && !$page->pdf) {
-                $page->pdf = $page->svg . '.pdf';
+                $page->pdf = sprintf(__DIR__ . '/../../../var/page-%03d.pdf', $nr);
                 exec("inkscape --export-dpi=$dpi --export-area-page --export-pdf={$page->pdf} {$page->svg}");
                 unlink($page->svg);
             }
