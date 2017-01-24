@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns="http://www.w3.org/2000/svg"
+     height="{{ book.format.height }}mm" width="{{ book.format.width }}mm" version="1.1"
+     xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 {{ book.format.width }} {{ book.format.height }}" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <image width="{{ book.format.width }}" xlink:href="{{ photo }}" height="{{ book.format.height }}" y="0" x="0" preserveAspectRatio="none"/>
+    <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * position - book.format.titleFontSize * 1.5 }})">
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000">
+            <tspan>{{ from }}</tspan>
+        </text>
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff">
+            <tspan>{{ from }}</tspan>
+        </text>
+    </g>
+    <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * position }})">
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000">
+            <tspan>{% for symbol in symbols %}{{ symbol }}{% if not loop.last %} • {% endif %}{% else %}➟{% endfor %}</tspan>
+        </text>
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff">
+            <tspan>{% for symbol in symbols %}{{ symbol }}{% if not loop.last %} • {% endif %}{% else %}➟{% endfor %}</tspan>
+        </text>
+    </g>
+    <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * position + book.format.titleFontSize * 1.5 }})">
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000">
+            <tspan>{{ to }}</tspan>
+        </text>
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff">
+            <tspan>{{ to }}</tspan>
+        </text>
+    </g>
+{% if date %}
+    <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * position + book.format.titleFontSize * 3 }})">
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000">
+            <tspan>{{ date.format('j. F Y') }}</tspan>
+        </text>
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff">
+            <tspan>{{ date.format('j. F Y') }}</tspan>
+        </text>
+    </g>
+{% endif %}
+{% if not book.production %}
+    <path d="m0 0v{{ book.format.height }}h{{ book.format.width }}v-{{ book.format.height }}h-{{ book.format.width }}zm{{ book.format.cutOff }} {{ book.format.cutOff }}h{{ book.format.width - (book.format.cutOff * 2) }}v{{ book.format.height - (book.format.cutOff * 2) }}h-{{ book.format.width - (book.format.cutOff * 2) }}v-{{ book.format.height - (book.format.cutOff * 2) }}z"
+        fill-opacity=".5" stroke="#ef2929" stroke-width=".1" stroke-linecap="round" fill="#000"/>
+{% endif %}
+</svg>

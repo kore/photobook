@@ -11,5 +11,6 @@ class Format extends DataObject
     public $cutOff = 0;
     public $font = 'Cantarell';
     public $fontSize = 6;
-    public $titleFontSize = 14;
+    public $titleFontSize = 18;
+    public $subTitleFontSize = 12;
 }

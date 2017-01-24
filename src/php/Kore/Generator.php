@@ -23,6 +23,7 @@ class Generator
             new Page\Photo($this->templateHandler, $this->imageHandler),
             new Page\TwoStacked($this->templateHandler, $this->imageHandler),
             new Page\Caption($this->templateHandler, $this->imageHandler),
+            new Page\Travel($this->templateHandler, $this->imageHandler),
         ];
     }
 
