@@ -27,9 +27,15 @@ class Caption extends Page
 
     public function create(Book $book, $mixed): Book\Page
     {
+        $imageFile = $this->imageHandler->resize(
+            $book->baseDir . '/' . $mixed['photo'],
+            $book->format->width,
+            $book->format->height
+        );
+
         $data = [
             'book' => $book,
-            'photo' => $book->baseDir . '/' . $mixed['photo'],
+            'photo' => $imageFile,
             'caption' => $mixed['caption'],
             'position' => $mixed['position'] ?? .5,
         ];
