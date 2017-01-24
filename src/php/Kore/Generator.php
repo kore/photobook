@@ -22,6 +22,7 @@ class Generator
         $this->pageTypes = $pageTypes ?: [
             new Page\Photo($this->templateHandler, $this->imageHandler),
             new Page\TwoStacked($this->templateHandler, $this->imageHandler),
+            new Page\Caption($this->templateHandler, $this->imageHandler),
         ];
     }
 
