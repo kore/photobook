@@ -46,4 +46,20 @@ class ImageHandler
         $cropped->writeImage($target);
         return $target;
     }
+
+    public function blur(string $path)
+    {
+        $hash = md5(json_encode([$this->dpi, $this->quality, $path, 'blurred']));
+        $target = __DIR__ . '/../../../var/cache/' . $hash . '.jpeg';
+        if (file_exists($target)) {
+            return $target;
+        }
+
+        $imagick = new \Imagick($path);
+        $imagick->setImageCompressionQuality($this->quality);
+
+        $imagick->blurImage($this->dpi / 5, $this->dpi / 10);
+        $imagick->writeImage($target);
+        return $target;
+    }
 }
