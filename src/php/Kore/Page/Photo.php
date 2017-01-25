@@ -24,7 +24,7 @@ class Photo extends Page
         return is_string($mixed);
     }
 
-    public function create(Book $book, $mixed): Book\Page
+    public function create(Book $book, $mixed, int $pageNumber): Book\Page
     {
         $path = $book->baseDir . '/' . $mixed;
         if (!file_exists($path)) {

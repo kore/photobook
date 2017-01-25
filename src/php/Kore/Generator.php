@@ -24,6 +24,7 @@ class Generator
             new Page\TwoStacked($this->templateHandler, $this->imageHandler),
             new Page\Caption($this->templateHandler, $this->imageHandler),
             new Page\Travel($this->templateHandler, $this->imageHandler),
+            new Page\ClearDouble($this->templateHandler),
         ];
     }
 
@@ -42,10 +43,13 @@ class Generator
             $this->imageHandler->setQuality(80);
         }
 
-        foreach ($configuration['pages'] as $page) {
+        foreach ($configuration['pages'] as $number => $page) {
             foreach ($this->pageTypes as $pageType) {
                 if ($pageType->handles($page)) {
-                    $book->pages[] = $pageType->create($book, $page);
+                    $page = $pageType->create($book, $page, $number);
+                    if (!$page instanceof Book\Page\None) {
+                        $book->pages[] = $page;
+                    }
                     continue 2;
                 }
             }

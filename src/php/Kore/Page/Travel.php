@@ -25,7 +25,7 @@ class Travel extends Page
             $mixed['type'] === 'travel';
     }
 
-    public function create(Book $book, $mixed): Book\Page
+    public function create(Book $book, $mixed, int $pageNumber): Book\Page
     {
         $imageFile = $this->imageHandler->resize(
             $book->baseDir . '/' . $mixed['photo'],

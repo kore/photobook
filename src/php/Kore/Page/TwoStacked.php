@@ -26,7 +26,7 @@ class TwoStacked extends Page
             count($mixed['photos']) === 2;
     }
 
-    public function create(Book $book, $mixed): Book\Page
+    public function create(Book $book, $mixed, int $pageNumber): Book\Page
     {
         $data = [
             'book' => $book,

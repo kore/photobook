@@ -25,7 +25,7 @@ class Caption extends Page
             $mixed['type'] === 'caption';
     }
 
-    public function create(Book $book, $mixed): Book\Page
+    public function create(Book $book, $mixed, int $pageNumber): Book\Page
     {
         $imageFile = $this->imageHandler->resize(
             $book->baseDir . '/' . $mixed['photo'],

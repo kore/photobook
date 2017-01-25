@@ -6,5 +6,5 @@ abstract class Page
 {
     abstract public function handles($mixed): bool;
 
-    abstract public function create(Book $book, $mixed): Book\Page;
+    abstract public function create(Book $book, $mixed, int $pageNumber): Book\Page;
 }
