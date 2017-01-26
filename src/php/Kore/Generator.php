@@ -67,6 +67,10 @@ class Generator
 
     public function writePdf(Book $book, $targetFile)
     {
+        if (count($book->pages) % 4) {
+            echo "Warning: Book contains ", count($book->pages), " pages, which is not divisible by 4.", PHP_EOL;
+        }
+
         $dpi = $book->production ? 300 : 90;
         foreach ($book->pages as $nr => $page) {
             if ($page->svg && !$page->pdf) {
