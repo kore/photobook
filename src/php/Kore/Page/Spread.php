@@ -7,7 +7,7 @@ use Kore\TemplateHandler;
 use Kore\Page;
 use Kore\Book;
 
-class TwoStacked extends Page
+class Spread extends Page
 {
     private $templateHandler;
 
@@ -22,39 +22,45 @@ class TwoStacked extends Page
     public function handles($mixed): bool
     {
         return is_array($mixed) &&
-            $mixed['type'] === 'stacked' &&
+            $mixed['type'] === 'spread' &&
             isset($mixed['photos']) &&
-            count($mixed['photos']) === 2;
+            count($mixed['photos']) >= 2 &&
+            count($mixed['photos']) <= 4;
     }
 
     public function create(Book $book, $mixed, int $pageNumber): Book\Page
     {
+        $backgroundImage = $this->imageHandler->resize(
+            $book->baseDir . '/' . $mixed['background'],
+            $book->format->width,
+            $book->format->height
+        );
+        $backgroundImage = $this->imageHandler->blur($backgroundImage);
+
+        $size = (object) [
+            'width' => $book->format->width / 2 - $book->format->width / 10,
+            'height' => $book->format->height / 2 - $book->format->height / 10,
+        ];
+
         $data = [
             'book' => $book,
+            'background' => $backgroundImage,
+            'size' => $size,
             'photos' => array_map(
-                function (string $path) use ($book) {
+                function (string $path) use ($book, $size) {
                     return $this->imageHandler->resize(
                         $book->baseDir . '/' . $path,
-                        $book->format->width / 2,
-                        $book->format->height / 2
+                        $size->width,
+                        $size->height
                     );
                 },
                 $mixed['photos']
-            ),
-            'texts' => array_map(
-                function (string $text) {
-                    return preg_split(
-                        '(\\r\\n|\\r|\\n)',
-                        wordwrap($text, 40)
-                    );
-                },
-                $mixed['texts'] ?? []
             ),
         ];
 
         file_put_contents(
             $svgFile = __DIR__ . '/../../../../var/cache/' . md5(json_encode($mixed)) . '.svg',
-            $this->templateHandler->render('Kore/Page/TwoStacked/template.svg', $data)
+            $this->templateHandler->render('Kore/Page/Spread/template.svg', $data)
         );
 
         return new Book\Page(['svg' => $svgFile]);

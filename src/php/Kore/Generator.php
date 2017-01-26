@@ -25,6 +25,7 @@ class Generator
             new Page\Caption($this->templateHandler, $this->imageHandler),
             new Page\Travel($this->templateHandler, $this->imageHandler),
             new Page\ClearDouble($this->templateHandler),
+            new Page\Spread($this->templateHandler, $this->imageHandler),
         ];
     }
 
@@ -43,7 +44,9 @@ class Generator
             $this->imageHandler->setQuality(80);
         }
 
+        echo "Processing pages: ";
         foreach ($configuration['pages'] as $number => $page) {
+            echo ".";
             foreach ($this->pageTypes as $pageType) {
                 if ($pageType->handles($page)) {
                     $page = $pageType->create($book, $page, $number);
@@ -56,6 +59,7 @@ class Generator
 
             throw new \OutOfBoundsException("No page type for: " . json_encode($page));
         }
+        echo PHP_EOL;
 
         return $book;
     }

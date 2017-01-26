@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns="http://www.w3.org/2000/svg"
+     height="{{ book.format.height }}mm" width="{{ book.format.width }}mm" version="1.1"
+     xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 {{ book.format.width }} {{ book.format.height }}" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <image width="{{ book.format.width }}" xlink:href="{{ background }}" height="{{ book.format.height }}" y="0" x="0" preserveAspectRatio="none"/>
+{% if photos|length == 2 %}
+    {% include "Kore/Page/Spread/photo.svg" with {
+        x: book.format.width / 20 + book.format.cutOff,
+        y: book.format.height / 2 - size.height / 2,
+        width: size.width,
+        height: size.height,
+        photo: photos[0],
+    } %}
+    {% include "Kore/Page/Spread/photo.svg" with {
+        x: book.format.width / 2 + book.format.width / 20 - book.format.cutOff,
+        y: book.format.height / 2 - size.height / 2,
+        width: size.width,
+        height: size.height,
+        photo: photos[1],
+    } %}
+{% elseif photos|length == 3 %}
+    {% include "Kore/Page/Spread/photo.svg" with {
+        x: book.format.width / 2 - size.width / 2,
+        y: book.format.height / 20 + book.format.cutOff,
+        width: size.width,
+        height: size.height,
+        photo: photos[0],
+    } %}
+    {% include "Kore/Page/Spread/photo.svg" with {
+        x: book.format.width / 20 + book.format.cutOff,
+        y: book.format.height / 2 + book.format.height / 20 - book.format.cutOff,
+        width: size.width,
+        height: size.height,
+        photo: photos[1],
+    } %}
+    {% include "Kore/Page/Spread/photo.svg" with {
+        x: book.format.width / 2 + book.format.width / 20 - book.format.cutOff,
+        y: book.format.height / 2 + book.format.height / 20 - book.format.cutOff,
+        width: size.width,
+        height: size.height,
+        photo: photos[2],
+    } %}
+{% elseif photos|length == 4 %}
+    {% include "Kore/Page/Spread/photo.svg" with {
+        x: book.format.width / 20 + book.format.cutOff,
+        y: book.format.height / 20 + book.format.cutOff,
+        width: size.width,
+        height: size.height,
+        photo: photos[0],
+    } %}
+    {% include "Kore/Page/Spread/photo.svg" with {
+        x: book.format.width / 2 + book.format.width / 20 - book.format.cutOff,
+        y: book.format.height / 20 + book.format.cutOff,
+        width: size.width,
+        height: size.height,
+        photo: photos[1],
+    } %}
+    {% include "Kore/Page/Spread/photo.svg" with {
+        x: book.format.width / 20 + book.format.cutOff,
+        y: book.format.height / 2 + book.format.height / 20 - book.format.cutOff,
+        width: size.width,
+        height: size.height,
+        photo: photos[2],
+    } %}
+    {% include "Kore/Page/Spread/photo.svg" with {
+        x: book.format.width / 2 + book.format.width / 20 - book.format.cutOff,
+        y: book.format.height / 2 + book.format.height / 20 - book.format.cutOff,
+        width: size.width,
+        height: size.height,
+        photo: photos[3],
+    } %}
+{% endif %}
+{% if not book.production %}
+    <path d="m0 0v{{ book.format.height }}h{{ book.format.width }}v-{{ book.format.height }}h-{{ book.format.width }}zm{{ book.format.cutOff }} {{ book.format.cutOff }}h{{ book.format.width - (book.format.cutOff * 2) }}v{{ book.format.height - (book.format.cutOff * 2) }}h-{{ book.format.width - (book.format.cutOff * 2) }}v-{{ book.format.height - (book.format.cutOff * 2) }}z"
+        fill-opacity=".5" stroke="#ef2929" stroke-width=".1" stroke-linecap="round" fill="#000"/>
+{% endif %}
+</svg>
