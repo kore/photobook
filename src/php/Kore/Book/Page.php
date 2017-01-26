@@ -8,4 +8,5 @@ class Page extends DataObject
 {
     public $svg;
     public $pdf;
+    public $source;
 }

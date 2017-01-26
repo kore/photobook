@@ -45,7 +45,7 @@ class Travel extends Page
         ];
 
         file_put_contents(
-            $svgFile = __DIR__ . '/../../../../var/cache/' . md5(json_encode($mixed)) . '.svg',
+            $svgFile = __DIR__ . '/../../../../var/cache/' . hash("sha256", json_encode($mixed)) . '.svg',
             $this->templateHandler->render('Kore/Page/Travel/template.svg', $data)
         );
 

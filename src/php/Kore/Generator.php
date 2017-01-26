@@ -45,11 +45,12 @@ class Generator
         }
 
         echo "Processing pages: ";
-        foreach ($configuration['pages'] as $number => $page) {
+        foreach ($configuration['pages'] as $number => $definition) {
             echo ".";
             foreach ($this->pageTypes as $pageType) {
-                if ($pageType->handles($page)) {
-                    $page = $pageType->create($book, $page, $number);
+                if ($pageType->handles($definition)) {
+                    $page = $pageType->create($book, $definition, $number);
+                    $page->source = $definition;
                     if (!$page instanceof Book\Page\None) {
                         $book->pages[] = $page;
                     }
@@ -70,6 +71,11 @@ class Generator
         foreach ($book->pages as $nr => $page) {
             if ($page->svg && !$page->pdf) {
                 $page->pdf = sprintf(__DIR__ . '/../../../var/page-%03d.pdf', $nr);
+
+                if (!file_exists($page->svg)) {
+                    throw new \RuntimeException("Cannot handle page $nr (" . json_encode($page->source) . ") – file not existant.");
+                }
+
                 exec("inkscape --export-dpi=$dpi --export-area-page --export-pdf={$page->pdf} {$page->svg}");
                 unlink($page->svg);
             }

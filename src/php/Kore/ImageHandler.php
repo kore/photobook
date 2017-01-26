@@ -28,7 +28,7 @@ class ImageHandler
 
     public function resize(string $path, int $width, int $height): string
     {
-        $hash = md5(json_encode([$this->dpi, $this->quality, $path, $width, $height]));
+        $hash = hash("sha256", json_encode([$this->dpi, $this->quality, $path, $width, $height]));
         $target = __DIR__ . '/../../../var/cache/' . $hash . '.jpeg';
         if (file_exists($target)) {
             return $target;
@@ -49,7 +49,7 @@ class ImageHandler
 
     public function blur(string $path)
     {
-        $hash = md5(json_encode([$this->dpi, $this->quality, $path, 'blurred']));
+        $hash = hash("sha256", json_encode([$this->dpi, $this->quality, $path, 'blurred']));
         $target = __DIR__ . '/../../../var/cache/' . $hash . '.jpeg';
         if (file_exists($target)) {
             return $target;
