@@ -47,7 +47,7 @@ class TwoStacked extends Page
                         wordwrap($text, 40)
                     );
                 },
-                $mixed['texts']
+                $mixed['texts'] ?? []
             ),
         ];
 
