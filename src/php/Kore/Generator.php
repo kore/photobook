@@ -80,7 +80,7 @@ class Generator
                     throw new \RuntimeException("Cannot handle page $nr (" . json_encode($page->source) . ") – file not existant.");
                 }
 
-                exec("inkscape --export-dpi=$dpi --export-area-page --export-pdf={$page->pdf} {$page->svg}");
+                exec("inkscape --export-dpi=$dpi --export-text-to-path --export-area-page --export-pdf={$page->pdf} {$page->svg}");
                 unlink($page->svg);
             }
         }
