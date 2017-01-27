@@ -34,14 +34,23 @@ class Travel extends Page
         );
         $imageFile = $this->imageHandler->blur($imageFile);
 
+        $bottomImageFile = null;
+        if (isset($mixed['image'])) {
+            $bottomImageFile = $this->imageHandler->fit(
+                $book->baseDir . '/' . $mixed['image'],
+                $book->format->width * .9,
+                $book->format->height * .45
+            );
+        }
+
         $data = [
             'book' => $book,
             'photo' => $imageFile,
             'from' => $mixed['from'],
             'symbols' => $mixed['symbols'] ?? [],
             'to' => $mixed['to'],
+            'image' => $bottomImageFile,
             'date' => isset($mixed['date']) ? new \DateTime($mixed['date']) :null,
-            'position' => $mixed['position'] ?? .5,
         ];
 
         file_put_contents(

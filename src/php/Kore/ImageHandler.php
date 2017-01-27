@@ -47,6 +47,33 @@ class ImageHandler
         return $target;
     }
 
+    public function fit(string $path, int $width, int $height): string
+    {
+        $hash = hash("sha256", json_encode([$this->dpi, $this->quality, $path, $width, $height, 'fit']));
+        $target = __DIR__ . '/../../../var/cache/' . $hash . '.png';
+        if (file_exists($target)) {
+            return $target;
+        }
+
+
+        $imagick = new \Imagick($path);
+        $imagick->setImageCompressionQuality($this->quality);
+
+        $xScaleFactor = $imagick->getImageWidth / ($width * 0.0393701 * $this->dpi);
+        $yScaleFactor = $imagick->getImageHeight / ($height * 0.0393701 * $this->dpi);
+        $scaleFactor = max($xScaleFactor, $yScaleFactor, 1);
+
+        $imagick->resizeImage(
+            $imagick->getImageWidth() / $scaleFactor,
+            $imagick->getImageHeight() / $scaleFactor,
+            \Imagick::FILTER_LANCZOS,
+            1
+        );
+
+        $imagick->writeImage($target);
+        return $target;
+    }
+
     public function blur(string $path)
     {
         $hash = hash("sha256", json_encode([$this->dpi, $this->quality, $path, 'blurred']));

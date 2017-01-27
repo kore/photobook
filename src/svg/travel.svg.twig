@@ -5,8 +5,8 @@
      xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink"
      viewBox="0 0 {{ book.format.width }} {{ book.format.height }}" xmlns:dc="http://purl.org/dc/elements/1.1/">
     <image width="{{ book.format.width }}" xlink:href="{{ photo }}" height="{{ book.format.height }}" y="0" x="0" preserveAspectRatio="none"/>
-    <rect fill-opacity=".3" height="{{ book.format.titleFontSize * (date ? 4.9 : 3.9) }}" width="{{ book.format.width / 2 }}" stroke="#fff" stroke-width=".2" stroke-linecap="round" y="{{ book.format.height * position - book.format.titleFontSize * 2.2 }}" x="{{ book.format.width / 4 }}"/>
-    <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * position - book.format.titleFontSize * 1.1 }})">
+    <rect fill-opacity=".3" height="{{ book.format.titleFontSize * (date ? 4.9 : 3.9) }}" width="{{ book.format.width / 2 }}" stroke="#fff" stroke-width=".2" stroke-linecap="round" y="{{ book.format.height * 0.25 - book.format.titleFontSize * 2.2 }}" x="{{ book.format.width / 4 }}"/>
+    <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * 0.25 - book.format.titleFontSize * 1.1 }})">
         <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000">
             <tspan>{{ from }}</tspan>
         </text>
@@ -14,7 +14,7 @@
             <tspan>{{ from }}</tspan>
         </text>
     </g>
-    <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * position }})">
+    <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * 0.25 }})">
         <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000">
             <tspan>{% for symbol in symbols %}{{ symbol }}{% if not loop.last %} • {% endif %}{% else %}➟{% endfor %}</tspan>
         </text>
@@ -22,7 +22,7 @@
             <tspan>{% for symbol in symbols %}{{ symbol }}{% if not loop.last %} • {% endif %}{% else %}➟{% endfor %}</tspan>
         </text>
     </g>
-    <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * position + book.format.titleFontSize * 1.2 }})">
+    <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * 0.25 + book.format.titleFontSize * 1.2 }})">
         <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000">
             <tspan>{{ to }}</tspan>
         </text>
@@ -31,13 +31,18 @@
         </text>
     </g>
 {% if date %}
-    <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * position + book.format.titleFontSize * 2.2 }})">
+    <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * 0.25 + book.format.titleFontSize * 2.2 }})">
         <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000">
             <tspan>{{ date.format('j. F Y') }}</tspan>
         </text>
         <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff">
             <tspan>{{ date.format('j. F Y') }}</tspan>
         </text>
+    </g>
+{% endif %}
+{% if image %}
+    <g transform="translate({{ book.format.width / 20 }}, {{ book.format.height / 2 }})">
+        <image width="{{ book.format.width * 0.9 }}" xlink:href="{{ image }}" height="{{ book.format.height * 0.45 }}" y="0" x="0" preserveAspectRatio="xMidYMin meet"/>
     </g>
 {% endif %}
 {% include "svg/cutOff.svg.twig" with { book: book } %}
