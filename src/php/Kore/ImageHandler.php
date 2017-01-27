@@ -49,14 +49,16 @@ class ImageHandler
 
     public function fit(string $path, int $width, int $height): string
     {
-        $hash = hash("sha256", json_encode([$this->dpi, $this->quality, $path, $width, $height, 'fit']));
+        $hash = hash("sha256", json_encode([$this->dpi, $this->quality, $path, $width, $height, 'Fit']));
         $target = __DIR__ . '/../../../var/cache/' . $hash . '.png';
         if (file_exists($target)) {
             return $target;
         }
 
 
-        $imagick = new \Imagick($path);
+        $imagick = new \Imagick();
+        $imagick->setBackgroundColor(new \ImagickPixel('transparent'));
+        $imagick->readImage($path);
         $imagick->setImageCompressionQuality($this->quality);
 
         $xScaleFactor = $imagick->getImageWidth / ($width * 0.0393701 * $this->dpi);
@@ -70,6 +72,7 @@ class ImageHandler
             1
         );
 
+        $imagick->setImageFormat('png32');
         $imagick->writeImage($target);
         return $target;
     }
