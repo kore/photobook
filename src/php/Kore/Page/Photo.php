@@ -28,7 +28,7 @@ class Photo extends Page
     {
         $path = $book->baseDir . '/' . $mixed;
         if (!file_exists($path)) {
-            throw new \OutOfBoundException("File $path could not be found");
+            throw new \OutOfBoundsException("File $path could not be found");
         }
 
         $imageFile = $this->imageHandler->resize($path, $book->format->width, $book->format->height);
