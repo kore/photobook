@@ -39,7 +39,7 @@ class Photo extends Page
 
         file_put_contents(
             $svgFile = __DIR__ . '/../../../../var/cache/' . $mixed . '.svg',
-            $this->templateHandler->render('Kore/Page/Photo/template.svg', $data)
+            $this->templateHandler->render('svg/photo.svg.twig', $data)
         );
 
         return new Book\Page(['svg' => $svgFile]);

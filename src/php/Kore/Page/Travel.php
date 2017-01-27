@@ -46,7 +46,7 @@ class Travel extends Page
 
         file_put_contents(
             $svgFile = __DIR__ . '/../../../../var/cache/' . hash("sha256", json_encode($mixed)) . '.svg',
-            $this->templateHandler->render('Kore/Page/Travel/template.svg', $data)
+            $this->templateHandler->render('svg/travel.svg.twig', $data)
         );
 
         return new Book\Page(['svg' => $svgFile]);

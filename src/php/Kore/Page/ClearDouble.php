@@ -34,7 +34,7 @@ class ClearDouble extends Page
 
         file_put_contents(
             $svgFile = __DIR__ . '/../../../../var/cache/cleardoublepage_' . $pageNumber . '.svg',
-            $this->templateHandler->render('Kore/Page/ClearDouble/template.svg', $data)
+            $this->templateHandler->render('svg/clearDouble.svg.twig', $data)
         );
 
         return new Book\Page(['svg' => $svgFile]);

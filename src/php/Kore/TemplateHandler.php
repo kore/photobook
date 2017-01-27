@@ -9,7 +9,7 @@ class TemplateHandler
     public function __construct()
     {
         $this->twig = new \Twig_Environment(
-            new \Twig_Loader_Filesystem(__DIR__ . '/../')
+            new \Twig_Loader_Filesystem(__DIR__ . '/../../')
         );
     }
 

@@ -54,7 +54,7 @@ class TwoStacked extends Page
 
         file_put_contents(
             $svgFile = __DIR__ . '/../../../../var/cache/' . hash("sha256", json_encode($mixed)) . '.svg',
-            $this->templateHandler->render('Kore/Page/TwoStacked/template.svg', $data)
+            $this->templateHandler->render('svg/twoStacked.svg.twig', $data)
         );
 
         return new Book\Page(['svg' => $svgFile]);
