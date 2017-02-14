@@ -2,24 +2,34 @@
     <path d="m0 0v{{ book.format.height }}h{{ book.format.width }}v-{{ book.format.height }}h-{{ book.format.width }}zm{{ book.format.cutOff }} {{ book.format.cutOff }}h{{ book.format.width - (book.format.cutOff * 2) }}v{{ book.format.height - (book.format.cutOff * 2) }}h-{{ book.format.width - (book.format.cutOff * 2) }}v-{{ book.format.height - (book.format.cutOff * 2) }}z"
         fill-opacity=".5" stroke="#ef2929" stroke-width=".1" stroke-linecap="round" fill="#000"/>
     <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height - book.format.cutOff }})">
-        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.fontSize }}" font-family="{{ book.format.font }}" fill="#ef2929">
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.fontSize / 2 }}" font-family="monospace" fill="#ef2929">
             <tspan>{{ page.right ? "Right" : "Left" }}</tspan>
         </text>
     </g>
     {% if page.right %}
         <rect x="{{ book.format.cutOff }}" y="{{ book.format.cutOff }}" width="{{ book.format.hiddenInner }}" height="{{ book.format.height - 2 * book.format.cutOff }}"
             fill-opacity=".5" fill="#000" />
-        <g transform="translate({{ book.format.cutOff + book.format.hiddenInner / 2 }}, {{ book.format.height - book.format.cutOff }})">
-            <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.fontSize }}" font-family="{{ book.format.font }}" fill="#ef2929">
+        <g transform="translate({{ book.format.cutOff }}, {{ book.format.height - book.format.cutOff }})">
+            <text style="word-spacing:0px; letter-spacing:0px; text-anchor:start; text-align:left" xml:space="preserve" font-size="{{ book.format.fontSize / 2 }}" font-family="monospace" fill="#ef2929">
+                <tspan>{{ page.reference }}</tspan>
+            </text>
+        </g>
+        <g transform="translate({{ book.format.width - book.format.cutOff }}, {{ book.format.height - book.format.cutOff }})">
+            <text style="word-spacing:0px; letter-spacing:0px; text-anchor:end; text-align:right" xml:space="preserve" font-size="{{ book.format.fontSize / 2 }}" font-family="monospace" fill="#ef2929">
                 <tspan>{{ page.number }}</tspan>
             </text>
         </g>
     {% else %}
         <rect x="{{ book.format.width - book.format.cutOff - book.format.hiddenInner }}" y="{{ book.format.cutOff }}" width="{{ book.format.hiddenInner }}" height="{{ book.format.height - 2 * book.format.cutOff }}"
             fill-opacity=".5" fill="#000" />
-        <g transform="translate({{ book.format.width - book.format.cutOff - book.format.hiddenInner / 2 }}, {{ book.format.height - book.format.cutOff }})">
-            <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.fontSize }}" font-family="{{ book.format.font }}" fill="#ef2929">
+        <g transform="translate({{ book.format.cutOff }}, {{ book.format.height - book.format.cutOff }})">
+            <text style="word-spacing:0px; letter-spacing:0px; text-anchor:start; text-align:left" xml:space="preserve" font-size="{{ book.format.fontSize / 2 }}" font-family="monospace" fill="#ef2929">
                 <tspan>{{ page.number }}</tspan>
+            </text>
+        </g>
+        <g transform="translate({{ book.format.width - book.format.cutOff }}, {{ book.format.height - book.format.cutOff }})">
+            <text style="word-spacing:0px; letter-spacing:0px; text-anchor:end; text-align:right" xml:space="preserve" font-size="{{ book.format.fontSize / 2 }}" font-family="monospace" fill="#ef2929">
+                <tspan>{{ page.reference }}</tspan>
             </text>
         </g>
     {% endif %}

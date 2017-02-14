@@ -45,6 +45,6 @@ class Caption extends Page
             $this->templateHandler->render('svg/caption.svg.twig', $data)
         );
 
-        return new Book\Page(['svg' => $svgFile]);
+        return new Book\Page(['svg' => $svgFile, 'reference' => $mixed['caption']]);
     }
 }

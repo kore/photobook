@@ -42,6 +42,6 @@ class Photo extends Page
             $this->templateHandler->render('svg/photo.svg.twig', $data)
         );
 
-        return new Book\Page(['svg' => $svgFile]);
+        return new Book\Page(['svg' => $svgFile, 'reference' => $mixed]);
     }
 }

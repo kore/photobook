@@ -63,6 +63,6 @@ class Spread extends Page
             $this->templateHandler->render('svg/spread.svg.twig', $data)
         );
 
-        return new Book\Page(['svg' => $svgFile]);
+        return new Book\Page(['svg' => $svgFile, 'reference' => 'BG: ' . $mixed['background']]);
     }
 }

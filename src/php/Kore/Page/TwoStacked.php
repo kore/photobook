@@ -57,6 +57,6 @@ class TwoStacked extends Page
             $this->templateHandler->render('svg/twoStacked.svg.twig', $data)
         );
 
-        return new Book\Page(['svg' => $svgFile]);
+        return new Book\Page(['svg' => $svgFile, 'reference' => $mixed['photos'][0]]);
     }
 }

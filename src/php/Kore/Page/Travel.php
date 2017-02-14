@@ -58,6 +58,6 @@ class Travel extends Page
             $this->templateHandler->render('svg/travel.svg.twig', $data)
         );
 
-        return new Book\Page(['svg' => $svgFile]);
+        return new Book\Page(['svg' => $svgFile, 'reference' => $mixed['from'] . ' to ' . $mixed['to']]);
     }
 }
