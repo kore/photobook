@@ -45,13 +45,18 @@ class Generator
         }
 
         echo "Processing pages: ";
-        foreach ($configuration['pages'] as $number => $definition) {
+        $number = 1;
+        foreach ($configuration['pages'] as $definition) {
             echo ".";
             foreach ($this->pageTypes as $pageType) {
                 if ($pageType->handles($definition)) {
                     $page = $pageType->create($book, $definition, $number);
                     $page->source = $definition;
+                    $page->number = $number;
+                    $page->right = (bool) ($number % 2);
+
                     if (!$page instanceof Book\Page\None) {
+                        ++$number;
                         $book->pages[] = $page;
                     }
                     continue 2;
@@ -72,16 +77,28 @@ class Generator
         }
 
         $dpi = $book->production ? 300 : 90;
-        foreach ($book->pages as $nr => $page) {
+        foreach ($book->pages as $number => $page) {
             if ($page->svg && !$page->pdf) {
-                $page->pdf = sprintf(__DIR__ . '/../../../var/page-%03d.pdf', $nr);
+                $page->pdf = sprintf(__DIR__ . '/../../../var/page-%03d.pdf', $number);
 
                 if (!file_exists($page->svg)) {
-                    throw new \RuntimeException("Cannot handle page $nr (" . json_encode($page->source) . ") – file not existant.");
+                    throw new \RuntimeException("Cannot handle page $number (" . json_encode($page->source) . ") – file not existant.");
+                }
+
+                if (!$book->production) {
+                    $marks = $this->templateHandler->render('svg/cutOff.svg.twig', ['book' => $book, 'page' => $page]);
+                    file_put_contents(
+                        $page->svg,
+                        str_replace(
+                            '</svg>',
+                            $marks . '</svg>',
+                            file_get_contents($page->svg)
+                        )
+                    );
                 }
 
                 exec("inkscape --export-dpi=$dpi --export-text-to-path --export-area-page --export-pdf={$page->pdf} {$page->svg}");
-                unlink($page->svg);
+                // unlink($page->svg);
             }
         }
 

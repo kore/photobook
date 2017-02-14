@@ -24,7 +24,7 @@ class ClearDouble extends Page
 
     public function create(Book $book, $mixed, int $pageNumber): Book\Page
     {
-        if (!$pageNumber % 2) {
+        if ($pageNumber % 2) {
             return new Book\Page\None();
         }
 
