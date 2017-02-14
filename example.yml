@@ -1,0 +1,40 @@
+book:
+    title: "Bali 2016"
+    baseDir: "/path/to/folder"
+    format:
+        width: 303
+        height: 216
+        cutOff: 3
+    # If set to true output will increase to 300dpi and cut off marks will vanish
+    production: false 
+
+pages:
+    - type: "cleardoublepage"
+    - type: "travel"
+      from: "Witten"
+      # http://www.fileformat.info/info/unicode/block/transport_and_map_symbols/list.htm
+      symbols: ['🚗', '🚌', '🛧', '🛧', '🚌']
+      to: "Sanur (Bali)"
+      date: "2016-07-14"
+      photo: "2016-07-14_02-39-29_IMG_20160714_085029.jpg"
+      date: "2016-07-14"
+      image: travel_witten_bali.svg
+    - type: "stacked"
+      photos:
+        - 2016-07-14_07-16-34_DSC_8032.JPG
+        - 2016-07-14_07-17-10_DSC_8034.JPG
+      texts:
+        - Optional caption for first photo
+        - Optional caption for second photo
+    - type: "caption"
+      caption: "Tempel des schwimmenden Gartens"
+      photo: 2016-07-14_08-44-30_DSC_8052.JPG
+      position: .2
+    - type: "spread"
+      background: 2016-07-14_09-03-20_DSC_8066.JPG
+      photos: # 2 - 4 photos
+        - 2016-07-14_08-45-11_DSC_8053.JPG
+        - 2016-07-14_08-52-50_DSC_8057.JPG
+        - 2016-07-14_08-58-26_DSC_8062.JPG
+        - 2016-07-14_09-03-03_DSC_8065.JPG
+    - 2016-07-14_09-15-53_DSC_8085.JPG # Full page photo
