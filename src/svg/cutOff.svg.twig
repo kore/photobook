@@ -9,8 +9,18 @@
     {% if page.right %}
         <rect x="{{ book.format.cutOff }}" y="{{ book.format.cutOff }}" width="{{ book.format.hiddenInner }}" height="{{ book.format.height - 2 * book.format.cutOff }}"
             fill-opacity=".5" fill="#000" />
+        <g transform="translate({{ book.format.cutOff + book.format.hiddenInner / 2 }}, {{ book.format.height - book.format.cutOff }})">
+            <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.fontSize }}" font-family="{{ book.format.font }}" fill="#ef2929">
+                <tspan>{{ page.number }}</tspan>
+            </text>
+        </g>
     {% else %}
         <rect x="{{ book.format.width - book.format.cutOff - book.format.hiddenInner }}" y="{{ book.format.cutOff }}" width="{{ book.format.hiddenInner }}" height="{{ book.format.height - 2 * book.format.cutOff }}"
             fill-opacity=".5" fill="#000" />
+        <g transform="translate({{ book.format.width - book.format.cutOff - book.format.hiddenInner / 2 }}, {{ book.format.height - book.format.cutOff }})">
+            <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.fontSize }}" font-family="{{ book.format.font }}" fill="#ef2929">
+                <tspan>{{ page.number }}</tspan>
+            </text>
+        </g>
     {% endif %}
 </g>
