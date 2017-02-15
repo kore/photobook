@@ -1,6 +1,6 @@
 book:
     title: "Bali 2016"
-    baseDir: "/home/kore/Downloads/photos/16_07_bali/"
+    baseDir: "/path/to/folder/"
     format:
         width: 303
         height: 216

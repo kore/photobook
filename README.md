@@ -4,8 +4,9 @@ Simple program to generate photo books out of photos specified by a simple YAML
 file.
 
 The program takes care of properly cutting, resizing the images. It offers
-different templates for photo pages. Each template is a twig SVG file. All
-pages will be concatenated and converted into a single PDF.
+different templates for photo pages. Each template is a
+[Twig](http://twig.sensiolabs.org/) SVG file. All pages will be concatenated
+and converted into a single PDF.
 
 ## Installation
 
