@@ -127,7 +127,7 @@ The `background` photo will be blurred and the photos from the `photos` list
 will be distributed across the background in a regular fashion. You may specify
 up to four photos.
 
-![Spread photos on background](docs/example-2.png)
+![Spread photos on background](docs/example-3.png)
 
 ### Clear Double Page
 
