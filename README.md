@@ -23,7 +23,7 @@ The program (only) has a CLI interface:
 
 You can find a full working example book definition in `example.yml` – just the
 referenced pictures are missing. The development output of the example can be
-found under `docs/example.pdf`.
+found under [`docs/example.pdf`](docs/example.pdf).
 
 ## The Book
 
