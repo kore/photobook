@@ -1,7 +1,6 @@
 # Photobook
 
-Simple program to generate photo books out of photos specified by a simple YAML
-file.
+Simple program to generate photo books out of photos specified by a YAML file.
 
 The program takes care of properly cutting, resizing the images. It offers
 different templates for photo pages. Each template is a
