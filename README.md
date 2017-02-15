@@ -10,7 +10,13 @@ and converted into a single PDF.
 
 ## Installation
 
-It requires PHP 7. To setup all dependencies, run:
+Requires:
+
+* PHP >= 7
+* [Inkscape](https://inkscape.org/) for sane SVG to PDF conversion
+* [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) for PDF concatenation
+
+To install all required PHP libraries, run:
 
     composer install
 
