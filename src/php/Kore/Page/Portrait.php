@@ -30,7 +30,6 @@ class Portrait extends Page
     public function create(Book $book, $mixed, int $pageNumber): Book\Page
     {
         $backgroundImage = null;
-        var_dump($mixed);
         if (isset($mixed['background'])) {
             $backgroundImage = $this->imageHandler->resize(
                 $book->baseDir . '/' . $mixed['background'],
@@ -60,7 +59,6 @@ class Portrait extends Page
                 $mixed['photos']
             ),
         ];
-        var_dump($data);
 
         file_put_contents(
             $svgFile = __DIR__ . '/../../../../var/cache/' . hash("sha256", json_encode($mixed)) . '.svg',
