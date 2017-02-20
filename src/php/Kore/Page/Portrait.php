@@ -41,7 +41,7 @@ class Portrait extends Page
 
         $size = (object) [
             'width' => $book->format->width / 2 - $book->format->width / 10,
-            'height' => $book->format->height - $book->format->height / 10,
+            'height' => $book->format->height - $book->format->height / 5,
         ];
 
         $data = [
