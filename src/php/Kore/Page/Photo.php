@@ -38,7 +38,7 @@ class Photo extends Page
         ];
 
         file_put_contents(
-            $svgFile = __DIR__ . '/../../../../var/cache/' . $mixed . '.svg',
+            $svgFile = __DIR__ . '/../../../../var/cache/' . md5($mixed) . '.svg',
             $this->templateHandler->render('svg/photo.svg.twig', $data)
         );
 
