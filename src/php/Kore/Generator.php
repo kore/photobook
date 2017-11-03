@@ -27,6 +27,7 @@ class Generator
             new Page\ClearDouble($this->templateHandler),
             new Page\Spread($this->templateHandler, $this->imageHandler),
             new Page\Portrait($this->templateHandler, $this->imageHandler),
+            new Page\Grid($this->templateHandler, $this->imageHandler),
         ];
     }
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns="http://www.w3.org/2000/svg"
+     height="{{ book.format.height }}mm" width="{{ book.format.width }}mm" version="1.1"
+     xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 {{ book.format.width }} {{ book.format.height }}" xmlns:dc="http://purl.org/dc/elements/1.1/">
+{% if orientation == 'horizontal' %}
+    {% set offset = 0 %}
+    {% for photo in photos %}
+        <image width="{{ size.width }}" height="{{ size.height }}" xlink:href="{{ photo }}" y="{{ 0 }}" x="{{ offset }}" preserveAspectRatio="none"/>
+        {% set offset = offset + size.width %}
+        <rect width="{{ border }}" height="{{ size.height }}" y="{{ 0 }}" x="{{ offset }}" fill="{{ borderColor }}"/>
+        {% set offset = offset + border %}
+    {% endfor %}
+{% else %}
+    {% set offset = 0 %}
+    {% for photo in photos %}
+        <image width="{{ size.width }}" height="{{ size.height }}" xlink:href="{{ photo }}" y="{{ offset }}" x="{{ 0 }}" preserveAspectRatio="none"/>
+        {% set offset = offset + size.height %}
+        <rect width="{{ border }}" height="{{ size.height }}" y="{{ offset }}" x="{{ 0 }}" fill="{{ borderColor }}"/>
+        {% set offset = offset + border %}
+    {% endfor %}
+{% endif %}
+</svg>
