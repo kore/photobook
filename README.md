@@ -133,7 +133,65 @@ The `background` photo will be blurred and the photos from the `photos` list
 will be distributed across the background in a regular fashion. You may specify
 up to four photos.
 
-![Spread photos on background](docs/example-3.png)
+![Spread photos on background](docs/example-5.png)
+
+### Spread Photos without Background
+
+Spread a variable number of photos across a blurred photo background:
+
+    - type: "spread"
+      photos: # 2 - 4 photos
+        - 2016-07-14_08-45-11_DSC_8053.JPG
+        - 2016-07-14_08-52-50_DSC_8057.JPG
+        - 2016-07-14_08-58-26_DSC_8062.JPG
+        - 2016-07-14_09-03-03_DSC_8065.JPG
+
+If no `background` is provided the photos will be slightly larger and a pure
+white background is used. The photos from the `photos` list will be distributed
+across the background in a regular fashion. You may specify up to four photos.
+
+![Spread photos without background](docs/example-6.png)
+
+### Photo Panel
+
+Use a couple of photos in a panel
+
+    - type: "panel"
+      orientation: vertical # default is horizontal
+      border: 2 # default is 1 (milimeter)
+      borderColor: "#eeeeee" # default is #fff
+      photos: # 2 - 4 photos
+        - 2016-07-14_08-45-11_DSC_8053.JPG
+        - 2016-07-14_08-58-26_DSC_8062.JPG
+        - 2016-07-14_09-03-03_DSC_8065.JPG
+
+The provided `photos` will be placed next to each other, wither horizontally
+(default) or vertically (`orientation: vertical`). You may specify the border
+width in milimeter and the border color.
+
+![Photo Panel](docs/example-3.png)
+
+### Photo Grid
+
+Use a couple of photos in a grid
+
+    - type: "grid"
+      border: 2 # default is 1 (milimeter)
+      borderColor: "#eee" # default is #fff
+      rows:
+        - 1
+        - 3
+      photos: # Basically any amount of photos – must match number of grid fields
+        - 2016-07-14_08-52-50_DSC_8057.JPG
+        - 2016-07-14_08-45-11_DSC_8053.JPG
+        - 2016-07-14_08-58-26_DSC_8062.JPG
+        - 2016-07-14_09-03-03_DSC_8065.JPG
+
+The provided `photos` will be placed in the specified grid. To specify a grid
+use the `rows` property and specify how many photos should be used for each row.
+You may specify the border width in milimeter and the border color.
+
+![Photo Panel](docs/example-4.png)
 
 ### Clear Double Page
 
