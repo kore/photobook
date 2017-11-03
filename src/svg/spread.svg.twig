@@ -4,17 +4,19 @@
      height="{{ book.format.height }}mm" width="{{ book.format.width }}mm" version="1.1"
      xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink"
      viewBox="0 0 {{ book.format.width }} {{ book.format.height }}" xmlns:dc="http://purl.org/dc/elements/1.1/">
+{% if background %}
     <image width="{{ book.format.width }}" xlink:href="{{ background }}" height="{{ book.format.height }}" y="0" x="0" preserveAspectRatio="none"/>
+{% endif %}
 {% if photos|length == 2 %}
     {% include "svg/spread/photo.svg.twig" with {
-        x: book.format.width / 20 + book.format.cutOff,
+        x: book.format.width / border + book.format.cutOff,
         y: book.format.height / 2 - size.height / 2,
         width: size.width,
         height: size.height,
         photo: photos[0],
     } %}
     {% include "svg/spread/photo.svg.twig" with {
-        x: book.format.width / 2 + book.format.width / 20 - book.format.cutOff,
+        x: book.format.width / 2 + book.format.width / border - book.format.cutOff,
         y: book.format.height / 2 - size.height / 2,
         width: size.width,
         height: size.height,
@@ -23,50 +25,50 @@
 {% elseif photos|length == 3 %}
     {% include "svg/spread/photo.svg.twig" with {
         x: book.format.width / 2 - size.width / 2,
-        y: book.format.height / 20 + book.format.cutOff,
+        y: book.format.height / border + book.format.cutOff,
         width: size.width,
         height: size.height,
         photo: photos[0],
     } %}
     {% include "svg/spread/photo.svg.twig" with {
-        x: book.format.width / 20 + book.format.cutOff,
-        y: book.format.height / 2 + book.format.height / 20 - book.format.cutOff,
+        x: book.format.width / border + book.format.cutOff,
+        y: book.format.height / 2 + book.format.height / border - book.format.cutOff,
         width: size.width,
         height: size.height,
         photo: photos[1],
     } %}
     {% include "svg/spread/photo.svg.twig" with {
-        x: book.format.width / 2 + book.format.width / 20 - book.format.cutOff,
-        y: book.format.height / 2 + book.format.height / 20 - book.format.cutOff,
+        x: book.format.width / 2 + book.format.width / border - book.format.cutOff,
+        y: book.format.height / 2 + book.format.height / border - book.format.cutOff,
         width: size.width,
         height: size.height,
         photo: photos[2],
     } %}
 {% elseif photos|length == 4 %}
     {% include "svg/spread/photo.svg.twig" with {
-        x: book.format.width / 20 + book.format.cutOff,
-        y: book.format.height / 20 + book.format.cutOff,
+        x: book.format.width / border + book.format.cutOff,
+        y: book.format.height / border + book.format.cutOff,
         width: size.width,
         height: size.height,
         photo: photos[0],
     } %}
     {% include "svg/spread/photo.svg.twig" with {
-        x: book.format.width / 2 + book.format.width / 20 - book.format.cutOff,
-        y: book.format.height / 20 + book.format.cutOff,
+        x: book.format.width / 2 + book.format.width / border - book.format.cutOff,
+        y: book.format.height / border + book.format.cutOff,
         width: size.width,
         height: size.height,
         photo: photos[1],
     } %}
     {% include "svg/spread/photo.svg.twig" with {
-        x: book.format.width / 20 + book.format.cutOff,
-        y: book.format.height / 2 + book.format.height / 20 - book.format.cutOff,
+        x: book.format.width / border + book.format.cutOff,
+        y: book.format.height / 2 + book.format.height / border - book.format.cutOff,
         width: size.width,
         height: size.height,
         photo: photos[2],
     } %}
     {% include "svg/spread/photo.svg.twig" with {
-        x: book.format.width / 2 + book.format.width / 20 - book.format.cutOff,
-        y: book.format.height / 2 + book.format.height / 20 - book.format.cutOff,
+        x: book.format.width / 2 + book.format.width / border - book.format.cutOff,
+        y: book.format.height / 2 + book.format.height / border - book.format.cutOff,
         width: size.width,
         height: size.height,
         photo: photos[3],

@@ -30,22 +30,28 @@ class Spread extends Page
 
     public function create(Book $book, $mixed, int $pageNumber): Book\Page
     {
-        $backgroundImage = $this->imageHandler->resize(
-            $book->baseDir . '/' . $mixed['background'],
-            $book->format->width,
-            $book->format->height
-        );
-        $backgroundImage = $this->imageHandler->blur($backgroundImage);
+        $border = 40;
+        $backgroundImage = null;
+        if (isset($mixed['background'])) {
+            $backgroundImage = $this->imageHandler->resize(
+                $book->baseDir . '/' . $mixed['background'],
+                $book->format->width,
+                $book->format->height
+            );
+            $backgroundImage = $this->imageHandler->blur($backgroundImage);
+            $border = 20;
+        }
 
         $size = (object) [
-            'width' => $book->format->width / 2 - $book->format->width / 10,
-            'height' => $book->format->height / 2 - $book->format->height / 10,
+            'width' => $book->format->width / 2 - $book->format->width / $border * 2,
+            'height' => $book->format->height / 2 - $book->format->height / $border * 2,
         ];
 
         $data = [
             'book' => $book,
             'background' => $backgroundImage,
             'size' => $size,
+            'border' => $border,
             'photos' => array_map(
                 function (string $path) use ($book, $size) {
                     return $this->imageHandler->resize(
@@ -63,6 +69,9 @@ class Spread extends Page
             $this->templateHandler->render('svg/spread.svg.twig', $data)
         );
 
-        return new Book\Page(['svg' => $svgFile, 'reference' => 'BG: ' . $mixed['background']]);
+        return new Book\Page([
+            'svg' => $svgFile,
+            'reference' => 'BG: ' . ($mixed['background'] ?? 'none'),
+        ]);
     }
 }
