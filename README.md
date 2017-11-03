@@ -84,7 +84,7 @@ The plain photo:
 
 Just pass a file name and the image will be shown full page.
 
-![Plain photo](docs/example-4.png)
+![Plain photo](docs/example-7.png)
 
 ### Photo With Caption
 
