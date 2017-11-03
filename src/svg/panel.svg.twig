@@ -4,21 +4,18 @@
      height="{{ book.format.height }}mm" width="{{ book.format.width }}mm" version="1.1"
      xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink"
      viewBox="0 0 {{ book.format.width }} {{ book.format.height }}" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <rect width="{{ book.format.width }}" height="{{ book.format.height }}" y="{{ 0 }}" x="{{ 0 }}" fill="{{ borderColor }}"/>
 {% if orientation == 'horizontal' %}
     {% set offset = 0 %}
     {% for photo in photos %}
         <image width="{{ size.width }}" height="{{ size.height }}" xlink:href="{{ photo }}" y="{{ 0 }}" x="{{ offset }}" preserveAspectRatio="none"/>
-        {% set offset = offset + size.width %}
-        <rect width="{{ border }}" height="{{ size.height }}" y="{{ 0 }}" x="{{ offset }}" fill="{{ borderColor }}"/>
-        {% set offset = offset + border %}
+        {% set offset = offset + size.width + border %}
     {% endfor %}
 {% else %}
     {% set offset = 0 %}
     {% for photo in photos %}
         <image width="{{ size.width }}" height="{{ size.height }}" xlink:href="{{ photo }}" y="{{ offset }}" x="{{ 0 }}" preserveAspectRatio="none"/>
-        {% set offset = offset + size.height %}
-        <rect width="{{ border }}" height="{{ size.height }}" y="{{ offset }}" x="{{ 0 }}" fill="{{ borderColor }}"/>
-        {% set offset = offset + border %}
+        {% set offset = offset + size.height + border %}
     {% endfor %}
 {% endif %}
 </svg>

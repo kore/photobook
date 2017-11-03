@@ -63,7 +63,7 @@ class Panel extends Page
 
         return new Book\Page([
             'svg' => $svgFile,
-            'reference' => 'BG: ' . ($mixed['background'] ?? 'none'),
+            'reference' => 'Panel: ' . ($horizontal ? 'Horizontal ' : 'Vertical ') . count($mixed['photos']),
         ]);
     }
 }
