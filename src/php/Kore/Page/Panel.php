@@ -7,7 +7,7 @@ use Kore\TemplateHandler;
 use Kore\Page;
 use Kore\Book;
 
-class Grid extends Page
+class Panel extends Page
 {
     private $templateHandler;
 
@@ -22,7 +22,7 @@ class Grid extends Page
     public function handles($mixed): bool
     {
         return is_array($mixed) &&
-            $mixed['type'] === 'grid' &&
+            $mixed['type'] === 'panel' &&
             isset($mixed['photos']) &&
             count($mixed['photos']) >= 2 &&
             count($mixed['photos']) <= 4;
@@ -58,7 +58,7 @@ class Grid extends Page
 
         file_put_contents(
             $svgFile = __DIR__ . '/../../../../var/cache/' . hash("sha256", json_encode($mixed)) . '.svg',
-            $this->templateHandler->render('svg/grid.svg.twig', $data)
+            $this->templateHandler->render('svg/panel.svg.twig', $data)
         );
 
         return new Book\Page([
