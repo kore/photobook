@@ -76,7 +76,16 @@ class Generator
     public function writePdf(Book $book, $targetFile)
     {
         if (count($book->pages) % 4) {
-            echo "Warning: Book contains ", count($book->pages), " pages, which is not divisible by 4.", PHP_EOL;
+            echo "Warning: Book contains ", count($book->pages), " pages, which is not divisible by 4. Appending empty pages.", PHP_EOL;
+
+            for ($pageNumber = count($book->pages) + 1; $pageNumber <= (ceil(count($book->pages) / 4) * 4); ++$pageNumber) {
+                file_put_contents(
+                    $svgFile = __DIR__ . '/../../../var/cache/cleardoublepage_' . $pageNumber . '.svg',
+                    $this->templateHandler->render('svg/clearDouble.svg.twig', ['book' => $book])
+                );
+
+                $book->pages[] = new Book\Page(['svg' => $svgFile]);
+            }
         }
 
         $dpi = $book->production ? 300 : 90;
