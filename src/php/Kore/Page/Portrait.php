@@ -65,6 +65,9 @@ class Portrait extends Page
             $this->templateHandler->render('svg/portrait.svg.twig', $data)
         );
 
-        return new Book\Page(['svg' => $svgFile, 'reference' => 'BG: ' . $mixed['background']]);
+        return new Book\Page([
+            'svg' => $svgFile,
+            'reference' => 'BG: ' . ($mixed['background'] ?? 'none'),
+        ]);
     }
 }
