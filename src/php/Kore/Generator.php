@@ -114,11 +114,11 @@ class Generator
             }
         }
 
-        exec("pdftk " . implode(' ', array_map(
+        exec("pdfunite " . implode(' ', array_map(
             function (Book\Page $page) {
                 return $page->pdf;
             },
-            $book->pages)) . " cat output " . $targetFile
+            $book->pages)) . " " . $targetFile
         );
     }
 }
