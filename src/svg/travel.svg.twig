@@ -7,37 +7,21 @@
     <image width="{{ book.format.width }}" xlink:href="{{ photo }}" height="{{ book.format.height }}" y="0" x="0" preserveAspectRatio="none"/>
     <rect fill-opacity=".3" height="{{ book.format.titleFontSize * (date ? 4.9 : 3.9) }}" width="{{ book.format.width / 2 }}" stroke="#fff" stroke-width=".2" stroke-linecap="round" y="{{ book.format.height * 0.25 - book.format.titleFontSize * 2.2 }}" x="{{ book.format.width / 4 }}"/>
     <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * 0.25 - book.format.titleFontSize * 1.1 }})">
-        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000">
-            <tspan>{{ from }}</tspan>
-        </text>
-        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff">
-            <tspan>{{ from }}</tspan>
-        </text>
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000"><tspan>{{ from }}</tspan></text>
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff"><tspan>{{ from }}</tspan></text>
     </g>
     <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * 0.25 }})">
-        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000">
-            <tspan>{% for symbol in symbols %}{{ symbol }}{% if not loop.last %} • {% endif %}{% else %}➟{% endfor %}</tspan>
-        </text>
-        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff">
-            <tspan>{% for symbol in symbols %}{{ symbol }}{% if not loop.last %} • {% endif %}{% else %}➟{% endfor %}</tspan>
-        </text>
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000"><tspan>{% for symbol in symbols %}{{ symbol }}{% if not loop.last %} • {% endif %}{% else %}➟{% endfor %}</tspan></text>
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff"><tspan>{% for symbol in symbols %}{{ symbol }}{% if not loop.last %} • {% endif %}{% else %}➟{% endfor %}</tspan></text>
     </g>
     <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * 0.25 + book.format.titleFontSize * 1.2 }})">
-        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000">
-            <tspan>{{ to }}</tspan>
-        </text>
-        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff">
-            <tspan>{{ to }}</tspan>
-        </text>
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000"><tspan>{{ to }}</tspan></text>
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.titleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff"><tspan>{{ to }}</tspan></text>
     </g>
 {% if date %}
     <g transform="translate({{ book.format.width / 2 }}, {{ book.format.height * 0.25 + book.format.titleFontSize * 2.2 }})">
-        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000">
-            <tspan>{{ date.format('j. F Y') }}</tspan>
-        </text>
-        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff">
-            <tspan>{{ date.format('j. F Y') }}</tspan>
-        </text>
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y=".2" x=".2" font-family="{{ book.format.font }}" fill="#000"><tspan>{{ date.format('j. F Y') }}</tspan></text>
+        <text style="word-spacing:0px; letter-spacing:0px; text-anchor:middle; text-align:center" xml:space="preserve" font-size="{{ book.format.subTitleFontSize }}" y="0px" x="0px" font-family="{{ book.format.font }}" fill="#ffffff"><tspan>{{ date.format('j. F Y') }}</tspan></text>
     </g>
 {% endif %}
 {% if image %}
