@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+namespace Kore;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+if ($argc < 2) {
+    echo "Usage: ", $argv[0], " <directory>", PHP_EOL;
+    exit(64);
+}
+
+$generator = new BookCreator();
+echo $generator->fromDirectory($argv[1]);
+
