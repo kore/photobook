@@ -12,6 +12,8 @@ if ($argc < 2) {
 
 $target = $argv[2] ?? $argv[1] . '.pdf';
 
+error_reporting(E_ALL & ~E_DEPRECATED);
+
 $generator = new Generator();
 $book = $generator->fromYamlFile($argv[1]);
 echo "Writing ", $target, PHP_EOL;
