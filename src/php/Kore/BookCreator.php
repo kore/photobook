@@ -96,6 +96,9 @@ class BookCreator
                 case 1:
                     if (!$lastDateTime || ($groupStartDate - $lastDateTime) > ($averageDistance * 5)) {
                         $configuration['pages'][] = [
+                            'type' => 'cleardoublepage',
+                        ];
+                        $configuration['pages'][] = [
                             'type' => 'caption',
                             'caption' => 'To Be Changed',
                             'photo' => reset($group),
