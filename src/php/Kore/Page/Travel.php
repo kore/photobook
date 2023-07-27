@@ -38,8 +38,8 @@ class Travel extends Page
         if (isset($mixed['image'])) {
             $bottomImageFile = $this->imageHandler->fit(
                 $book->baseDir . '/' . $mixed['image'],
-                $book->format->width * .9,
-                $book->format->height * .45
+                (int) $book->format->width * .9,
+                (int) $book->format->height * .45
             );
         }
 

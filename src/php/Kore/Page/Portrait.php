@@ -52,8 +52,8 @@ class Portrait extends Page
                 function (string $path) use ($book, $size) {
                     return $this->imageHandler->resize(
                         $book->baseDir . '/' . $path,
-                        $size->width,
-                        $size->height
+                        (int) $size->width,
+                        (int) $size->height
                     );
                 },
                 $mixed['photos']

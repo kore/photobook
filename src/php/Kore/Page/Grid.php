@@ -66,8 +66,8 @@ class Grid extends Page
                     'height' => $height,
                     'photo' =>  $this->imageHandler->resize(
                         $book->baseDir . '/' . $mixed['photos'][$photo++],
-                        $width,
-                        $height
+                        (int) $width,
+                        (int) $height
                     ),
                 ];
             }
@@ -111,8 +111,8 @@ class Grid extends Page
                     'width' => $width,
                     'photo' =>  $this->imageHandler->resize(
                         $book->baseDir . '/' . $mixed['photos'][$photo++],
-                        $width,
-                        $height
+                        (int) $width,
+                        (int) $height
                     ),
                 ];
             }

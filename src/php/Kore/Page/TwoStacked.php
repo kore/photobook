@@ -35,8 +35,8 @@ class TwoStacked extends Page
                 function (string $path) use ($book) {
                     return $this->imageHandler->resize(
                         $book->baseDir . '/' . $path,
-                        $book->format->width / 2,
-                        $book->format->height / 2
+                        (int) $book->format->width / 2,
+                        (int) $book->format->height / 2
                     );
                 },
                 $mixed['photos']
