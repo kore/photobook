@@ -1,8 +1,8 @@
 {
     "require": {
-        "symfony/yaml": "^3.2",
+        "symfony/yaml": "@stable",
         "kore/data-object": "@stable",
-        "twig/twig": "^2.1",
+        "twig/twig": "@stable",
         "stojg/crop": "^1.2"
     },
     "autoload": {
