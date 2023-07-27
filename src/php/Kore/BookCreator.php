@@ -104,6 +104,7 @@ class BookCreator
                     } else {
                         $configuration['pages'][] = reset($group);
                     }
+                    break;
                 case 2:
                     $configuration['pages'][] = [
                         'type' => 'panel',
@@ -112,6 +113,7 @@ class BookCreator
                         'borderColor' => '#ffffff',
                         'photos' => array_values($group),
                     ];
+                    break;
                 case 3:
                     $configuration['pages'][] = [
                         'type' => 'grid',
@@ -120,11 +122,13 @@ class BookCreator
                         'rows' => [1, 2],
                         'photos' => array_values($group),
                     ];
+                    break;
                 case 4:
                     $configuration['pages'][] = [
                         'type' => 'spread',
                         'photos' => array_values($group),
                     ];
+                    break;
                 case 5:
                     $configuration['pages'][] = [
                         'type' => 'grid',
@@ -133,11 +137,14 @@ class BookCreator
                         'rows' => [3, 2],
                         'photos' => array_values($group),
                     ];
+                    break;
+                default:
+                    throw new \OutOfBoundsException("No page type available for group.");
             }
 
             $lastDateTime = $groupEndDate;
         }
 
-        return Yaml::dump($configuration, 5);
+        return Yaml::dump($configuration, 5, 2);
     }
 }
