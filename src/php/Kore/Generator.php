@@ -66,7 +66,7 @@ class Generator
                 }
             }
 
-            throw new \OutOfBoundsException("No page type for: " . json_encode($page));
+            throw new \OutOfBoundsException("No page type for: " . json_encode($definition));
         }
         echo PHP_EOL;
 
