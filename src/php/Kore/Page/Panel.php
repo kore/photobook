@@ -2,10 +2,10 @@
 
 namespace Kore\Page;
 
-use Kore\ImageHandler;
-use Kore\TemplateHandler;
-use Kore\Page;
 use Kore\Book;
+use Kore\ImageHandler;
+use Kore\Page;
+use Kore\TemplateHandler;
 
 class Panel extends Page
 {
@@ -21,16 +21,16 @@ class Panel extends Page
 
     public function handles($mixed): bool
     {
-        return is_array($mixed) &&
-            $mixed['type'] === 'panel' &&
-            isset($mixed['photos']) &&
-            count($mixed['photos']) >= 2 &&
-            count($mixed['photos']) <= 4;
+        return is_array($mixed)
+            && 'panel' === $mixed['type']
+            && isset($mixed['photos'])
+            && count($mixed['photos']) >= 2
+            && count($mixed['photos']) <= 4;
     }
 
     public function create(Book $book, $mixed, int $pageNumber): Book\Page
     {
-        $horizontal = !isset($mixed['orientation']) || ($mixed['orientation'] !== 'vertical');
+        $horizontal = !isset($mixed['orientation']) || ('vertical' !== $mixed['orientation']);
         $border = $mixed['border'] ?? 1;
 
         $size = (object) [
@@ -47,7 +47,7 @@ class Panel extends Page
             'photos' => array_map(
                 function (string $path) use ($book, $size) {
                     return $this->imageHandler->resize(
-                        $book->baseDir . '/' . $path,
+                        $book->baseDir.'/'.$path,
                         (int) $size->width,
                         (int) $size->height
                     );
@@ -57,13 +57,13 @@ class Panel extends Page
         ];
 
         file_put_contents(
-            $svgFile = __DIR__ . '/../../../../var/cache/' . hash("sha256", json_encode($mixed)) . '.svg',
+            $svgFile = __DIR__.'/../../../../var/cache/'.hash('sha256', json_encode($mixed)).'.svg',
             $this->templateHandler->render('svg/panel.svg.twig', $data)
         );
 
         return new Book\Page([
             'svg' => $svgFile,
-            'reference' => 'Panel: ' . ($horizontal ? 'Horizontal ' : 'Vertical ') . count($mixed['photos']),
+            'reference' => 'Panel: '.($horizontal ? 'Horizontal ' : 'Vertical ').count($mixed['photos']),
         ]);
     }
 }

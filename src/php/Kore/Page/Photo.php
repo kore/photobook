@@ -2,10 +2,10 @@
 
 namespace Kore\Page;
 
-use Kore\ImageHandler;
-use Kore\TemplateHandler;
-use Kore\Page;
 use Kore\Book;
+use Kore\ImageHandler;
+use Kore\Page;
+use Kore\TemplateHandler;
 
 class Photo extends Page
 {
@@ -26,7 +26,7 @@ class Photo extends Page
 
     public function create(Book $book, $mixed, int $pageNumber): Book\Page
     {
-        $path = $book->baseDir . '/' . $mixed;
+        $path = $book->baseDir.'/'.$mixed;
         if (!file_exists($path)) {
             throw new \OutOfBoundsException("File $path could not be found");
         }
@@ -38,7 +38,7 @@ class Photo extends Page
         ];
 
         file_put_contents(
-            $svgFile = __DIR__ . '/../../../../var/cache/' . md5($mixed) . '.svg',
+            $svgFile = __DIR__.'/../../../../var/cache/'.md5($mixed).'.svg',
             $this->templateHandler->render('svg/photo.svg.twig', $data)
         );
 

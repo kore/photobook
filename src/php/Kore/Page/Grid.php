@@ -2,10 +2,10 @@
 
 namespace Kore\Page;
 
-use Kore\ImageHandler;
-use Kore\TemplateHandler;
-use Kore\Page;
 use Kore\Book;
+use Kore\ImageHandler;
+use Kore\Page;
+use Kore\TemplateHandler;
 
 class Grid extends Page
 {
@@ -21,12 +21,12 @@ class Grid extends Page
 
     public function handles($mixed): bool
     {
-        return is_array($mixed) &&
-            $mixed['type'] === 'grid' &&
-            isset($mixed['photos']) && is_array($mixed['photos']) &&
-            (
-                (isset($mixed['rows']) && is_array($mixed['rows'])) ||
-                (isset($mixed['columns']) && is_array($mixed['columns']))
+        return is_array($mixed)
+            && 'grid' === $mixed['type']
+            && isset($mixed['photos']) && is_array($mixed['photos'])
+            && (
+                (isset($mixed['rows']) && is_array($mixed['rows']))
+                || (isset($mixed['columns']) && is_array($mixed['columns']))
             );
     }
 
@@ -40,18 +40,14 @@ class Grid extends Page
 
         return new Book\Page([
             'svg' => $svgFile,
-            'reference' => 'Grid: ' . implode(' / ', $mixed['rows'] ?? $mixed['columns']),
+            'reference' => 'Grid: '.implode(' / ', $mixed['rows'] ?? $mixed['columns']),
         ]);
     }
 
     protected function renderRows(Book $book, array $mixed): string
     {
         if (array_sum($mixed['rows']) !== count($mixed['photos'])) {
-            throw new \OutOfBoundsException(sprintf(
-                '%d grid fields defined, but %d photos given.',
-                array_sum($mixed['rows']),
-                count($mixed['photos'])
-            ));
+            throw new \OutOfBoundsException(sprintf('%d grid fields defined, but %d photos given.', array_sum($mixed['rows']), count($mixed['photos'])));
         }
 
         $rows = [];
@@ -64,8 +60,8 @@ class Grid extends Page
                 $rows[$row][] = (object) [
                     'width' => $width,
                     'height' => $height,
-                    'photo' =>  $this->imageHandler->resize(
-                        $book->baseDir . '/' . $mixed['photos'][$photo++],
+                    'photo' => $this->imageHandler->resize(
+                        $book->baseDir.'/'.$mixed['photos'][$photo++],
                         (int) $width,
                         (int) $height
                     ),
@@ -82,7 +78,7 @@ class Grid extends Page
         ];
 
         file_put_contents(
-            $svgFile = __DIR__ . '/../../../../var/cache/' . hash("sha256", json_encode($mixed)) . '.svg',
+            $svgFile = __DIR__.'/../../../../var/cache/'.hash('sha256', json_encode($mixed)).'.svg',
             $this->templateHandler->render('svg/grid.svg.twig', $data)
         );
 
@@ -92,11 +88,7 @@ class Grid extends Page
     protected function renderColumns(Book $book, array $mixed): string
     {
         if (array_sum($mixed['columns']) !== count($mixed['photos'])) {
-            throw new \OutOfBoundsException(sprintf(
-                '%d grid fields defined, but %d photos given.',
-                array_sum($mixed['columns']),
-                count($mixed['photos'])
-            ));
+            throw new \OutOfBoundsException(sprintf('%d grid fields defined, but %d photos given.', array_sum($mixed['columns']), count($mixed['photos'])));
         }
 
         $columns = [];
@@ -109,8 +101,8 @@ class Grid extends Page
                 $columns[$column][] = (object) [
                     'height' => $height,
                     'width' => $width,
-                    'photo' =>  $this->imageHandler->resize(
-                        $book->baseDir . '/' . $mixed['photos'][$photo++],
+                    'photo' => $this->imageHandler->resize(
+                        $book->baseDir.'/'.$mixed['photos'][$photo++],
                         (int) $width,
                         (int) $height
                     ),
@@ -127,7 +119,7 @@ class Grid extends Page
         ];
 
         file_put_contents(
-            $svgFile = __DIR__ . '/../../../../var/cache/' . hash("sha256", json_encode($mixed)) . '.svg',
+            $svgFile = __DIR__.'/../../../../var/cache/'.hash('sha256', json_encode($mixed)).'.svg',
             $this->templateHandler->render('svg/grid.svg.twig', $data)
         );
 

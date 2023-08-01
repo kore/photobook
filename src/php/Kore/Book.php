@@ -12,7 +12,7 @@ class Book extends DataObject
     public $production = false;
     public $pages = [];
 
-    public function __construct(array $properties = array())
+    public function __construct(array $properties = [])
     {
         parent::__construct($properties);
 

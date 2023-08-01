@@ -2,10 +2,10 @@
 
 namespace Kore\Page;
 
-use Kore\ImageHandler;
-use Kore\TemplateHandler;
-use Kore\Page;
 use Kore\Book;
+use Kore\ImageHandler;
+use Kore\Page;
+use Kore\TemplateHandler;
 
 class Spread extends Page
 {
@@ -21,11 +21,11 @@ class Spread extends Page
 
     public function handles($mixed): bool
     {
-        return is_array($mixed) &&
-            $mixed['type'] === 'spread' &&
-            isset($mixed['photos']) &&
-            count($mixed['photos']) >= 2 &&
-            count($mixed['photos']) <= 4;
+        return is_array($mixed)
+            && 'spread' === $mixed['type']
+            && isset($mixed['photos'])
+            && count($mixed['photos']) >= 2
+            && count($mixed['photos']) <= 4;
     }
 
     public function create(Book $book, $mixed, int $pageNumber): Book\Page
@@ -34,7 +34,7 @@ class Spread extends Page
         $backgroundImage = null;
         if (isset($mixed['background'])) {
             $backgroundImage = $this->imageHandler->resize(
-                $book->baseDir . '/' . $mixed['background'],
+                $book->baseDir.'/'.$mixed['background'],
                 $book->format->width,
                 $book->format->height
             );
@@ -55,7 +55,7 @@ class Spread extends Page
             'photos' => array_map(
                 function (string $path) use ($book, $size) {
                     return $this->imageHandler->resize(
-                        $book->baseDir . '/' . $path,
+                        $book->baseDir.'/'.$path,
                         (int) $size->width,
                         (int) $size->height
                     );
@@ -65,13 +65,13 @@ class Spread extends Page
         ];
 
         file_put_contents(
-            $svgFile = __DIR__ . '/../../../../var/cache/' . hash("sha256", json_encode($mixed)) . '.svg',
+            $svgFile = __DIR__.'/../../../../var/cache/'.hash('sha256', json_encode($mixed)).'.svg',
             $this->templateHandler->render('svg/spread.svg.twig', $data)
         );
 
         return new Book\Page([
             'svg' => $svgFile,
-            'reference' => 'BG: ' . ($mixed['background'] ?? 'none'),
+            'reference' => 'BG: '.($mixed['background'] ?? 'none'),
         ]);
     }
 }

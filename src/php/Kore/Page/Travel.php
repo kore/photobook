@@ -2,10 +2,10 @@
 
 namespace Kore\Page;
 
-use Kore\ImageHandler;
-use Kore\TemplateHandler;
-use Kore\Page;
 use Kore\Book;
+use Kore\ImageHandler;
+use Kore\Page;
+use Kore\TemplateHandler;
 
 class Travel extends Page
 {
@@ -21,14 +21,14 @@ class Travel extends Page
 
     public function handles($mixed): bool
     {
-        return is_array($mixed) &&
-            $mixed['type'] === 'travel';
+        return is_array($mixed)
+            && 'travel' === $mixed['type'];
     }
 
     public function create(Book $book, $mixed, int $pageNumber): Book\Page
     {
         $imageFile = $this->imageHandler->resize(
-            $book->baseDir . '/' . $mixed['photo'],
+            $book->baseDir.'/'.$mixed['photo'],
             $book->format->width,
             $book->format->height
         );
@@ -37,7 +37,7 @@ class Travel extends Page
         $bottomImageFile = null;
         if (isset($mixed['image'])) {
             $bottomImageFile = $this->imageHandler->fit(
-                $book->baseDir . '/' . $mixed['image'],
+                $book->baseDir.'/'.$mixed['image'],
                 (int) $book->format->width * .9,
                 (int) $book->format->height * .45
             );
@@ -50,14 +50,14 @@ class Travel extends Page
             'symbols' => $mixed['symbols'] ?? [],
             'to' => $mixed['to'],
             'image' => $bottomImageFile,
-            'date' => isset($mixed['date']) ? new \DateTime($mixed['date']) :null,
+            'date' => isset($mixed['date']) ? new \DateTime($mixed['date']) : null,
         ];
 
         file_put_contents(
-            $svgFile = __DIR__ . '/../../../../var/cache/' . hash("sha256", json_encode($mixed)) . '.svg',
+            $svgFile = __DIR__.'/../../../../var/cache/'.hash('sha256', json_encode($mixed)).'.svg',
             $this->templateHandler->render('svg/travel.svg.twig', $data)
         );
 
-        return new Book\Page(['svg' => $svgFile, 'reference' => $mixed['from'] . ' to ' . $mixed['to']]);
+        return new Book\Page(['svg' => $svgFile, 'reference' => $mixed['from'].' to '.$mixed['to']]);
     }
 }

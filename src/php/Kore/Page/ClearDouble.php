@@ -2,10 +2,9 @@
 
 namespace Kore\Page;
 
-use Kore\ImageHandler;
-use Kore\TemplateHandler;
-use Kore\Page;
 use Kore\Book;
+use Kore\Page;
+use Kore\TemplateHandler;
 
 class ClearDouble extends Page
 {
@@ -18,8 +17,8 @@ class ClearDouble extends Page
 
     public function handles($mixed): bool
     {
-        return is_array($mixed) &&
-            $mixed['type'] === 'cleardoublepage';
+        return is_array($mixed)
+            && 'cleardoublepage' === $mixed['type'];
     }
 
     public function create(Book $book, $mixed, int $pageNumber): Book\Page
@@ -33,7 +32,7 @@ class ClearDouble extends Page
         ];
 
         file_put_contents(
-            $svgFile = __DIR__ . '/../../../../var/cache/cleardoublepage_' . $pageNumber . '.svg',
+            $svgFile = __DIR__.'/../../../../var/cache/cleardoublepage_'.$pageNumber.'.svg',
             $this->templateHandler->render('svg/clearDouble.svg.twig', $data)
         );
 

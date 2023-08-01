@@ -10,5 +10,8 @@
     },
     "autoload-dev": {
         "psr-4": { "": "test/php/" }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.22"
     }
 }

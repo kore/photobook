@@ -2,10 +2,10 @@
 
 namespace Kore\Page;
 
-use Kore\ImageHandler;
-use Kore\TemplateHandler;
-use Kore\Page;
 use Kore\Book;
+use Kore\ImageHandler;
+use Kore\Page;
+use Kore\TemplateHandler;
 
 class Caption extends Page
 {
@@ -21,14 +21,14 @@ class Caption extends Page
 
     public function handles($mixed): bool
     {
-        return is_array($mixed) &&
-            $mixed['type'] === 'caption';
+        return is_array($mixed)
+            && 'caption' === $mixed['type'];
     }
 
     public function create(Book $book, $mixed, int $pageNumber): Book\Page
     {
         $imageFile = $this->imageHandler->resize(
-            $book->baseDir . '/' . $mixed['photo'],
+            $book->baseDir.'/'.$mixed['photo'],
             $book->format->width,
             $book->format->height
         );
@@ -41,7 +41,7 @@ class Caption extends Page
         ];
 
         file_put_contents(
-            $svgFile = __DIR__ . '/../../../../var/cache/' . hash("sha256", json_encode($mixed)) . '.svg',
+            $svgFile = __DIR__.'/../../../../var/cache/'.hash('sha256', json_encode($mixed)).'.svg',
             $this->templateHandler->render('svg/caption.svg.twig', $data)
         );
 

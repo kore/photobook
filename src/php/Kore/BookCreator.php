@@ -32,19 +32,23 @@ class BookCreator
 
         // Find all photos and index them by the time they were taken
         $photos = [];
-        foreach (glob($directory . '/*') as $potentialImageFile) {
-            if (strpos(mime_content_type($potentialImageFile), 'image/') !== 0) {
+        foreach (glob($directory.'/*') as $potentialImageFile) {
+            if (0 !== strpos(mime_content_type($potentialImageFile), 'image/')) {
                 continue;
             }
 
             $exifData = exif_read_data($potentialImageFile);
             $dateTime = $exifData['DateTime'] ?? $exifData['DateTimeOriginal'] ?? $exifData['DateTimeDigitized'] ?? null;
-            if (!$dateTime) {
-                echo "Could not determine image time for $potentialImageFile", PHP_EOL;
-                continue;
+            $dateTime = $dateTime ? new \DateTimeImmutable($dateTime) : null;
+
+            if (!$dateTime && preg_match('((\\d+)[_-](\\d+)[_-](\\d+)(?:[_-](\\d{1,2})[_-](\\d{1,2})[_-](\\d{1,2}))?)', basename($potentialImageFile), $match)) {
+                $dateTime = new \DateTimeImmutable(sprintf('%d.%d.%d %d:%d:%d', $match[3], $match[2], $match[1], $match[4] ?? 12, $match[5] ?? 0, $match[6] ?? 0));
             }
 
-            $dateTime = new \DateTimeImmutable($dateTime);
+            if (!$dateTime) {
+                throw new \RuntimeException("Could not determine date for $potentialImageFile");
+            }
+
             $photos[$dateTime->getTimeStamp()] = $potentialImageFile;
         }
 
@@ -60,7 +64,7 @@ class BookCreator
         $lastDateTime = null;
         foreach ($photos as $dateTime => $photo) {
             if ($lastDateTime && ($dateTime - $lastDateTime) > $averageDistance) {
-                $group++;
+                ++$group;
             }
 
             $groups[$group][$dateTime] = basename($photo);
@@ -142,7 +146,7 @@ class BookCreator
                     ];
                     break;
                 default:
-                    throw new \OutOfBoundsException("No page type available for group.");
+                    throw new \OutOfBoundsException('No page type available for group.');
             }
 
             $lastDateTime = $groupEndDate;
