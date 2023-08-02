@@ -92,7 +92,7 @@ class Generator
         foreach ($book->pages as $number => $page) {
             if ($page->svg && !$page->pdf) {
                 $page->svgHash = md5(file_get_contents($page->svg));
-                $page->pdf = sprintf(__DIR__.'/../../../var/page-%03d-%s.pdf', $number, $page->svgHash);
+                $page->pdf = sprintf(__DIR__.'/../../../var/cache/page-%03d-%s.pdf', $number, $page->svgHash);
 
                 if (!file_exists($page->svg)) {
                     throw new \RuntimeException("Cannot handle page $number (".json_encode($page->source).') – file not existant.');
