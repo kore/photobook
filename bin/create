@@ -14,6 +14,14 @@ $target = $argv[2] ?? $argv[1] . '.pdf';
 
 error_reporting(E_ALL & ~E_DEPRECATED);
 
+// Clean up cache directory
+$oneWeekAgo = time() - 7 * 86400;
+foreach (glob(__DIR__ . '/../var/cache/*') as $cacheFile) {
+    if (filemtime($cacheFile) < $oneWeekAgo) {
+        unlink($cacheFile);
+    }
+}
+
 $generator = new Generator();
 $book = $generator->fromYamlFile($argv[1]);
 echo "Writing ", $target, PHP_EOL;
