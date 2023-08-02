@@ -104,7 +104,7 @@ class BookCreator
                         ];
                         $configuration['pages'][] = [
                             'type' => 'caption',
-                            'caption' => 'To Be Changed',
+                            'caption' => 'Caption',
                             'photo' => reset($group),
                             'position' => 0.2,
                         ];

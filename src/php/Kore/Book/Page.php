@@ -10,6 +10,7 @@ class Page extends DataObject
     public $number;
     public $right;
     public $svg;
+    public $svgHash;
     public $pdf;
     public $source;
 }

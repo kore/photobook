@@ -91,7 +91,8 @@ class Generator
         $dpi = $book->production ? 300 : 90;
         foreach ($book->pages as $number => $page) {
             if ($page->svg && !$page->pdf) {
-                $page->pdf = sprintf(__DIR__.'/../../../var/page-%03d.pdf', $number);
+                $page->svgHash = md5(file_get_contents($page->svg));
+                $page->pdf = sprintf(__DIR__.'/../../../var/page-%03d-%s.pdf', $number, $page->svgHash);
 
                 if (!file_exists($page->svg)) {
                     throw new \RuntimeException("Cannot handle page $number (".json_encode($page->source).') – file not existant.');
@@ -107,6 +108,10 @@ class Generator
                             file_get_contents($page->svg)
                         )
                     );
+
+                    if ($page->svgHash && file_exists($page->pdf)) {
+                        continue;
+                    }
                 }
 
                 exec("inkscape --export-dpi=$dpi --export-text-to-path --export-area-page --export-pdf={$page->pdf} {$page->svg}");
