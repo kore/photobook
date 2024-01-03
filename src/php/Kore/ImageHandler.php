@@ -7,14 +7,29 @@ class ImageHandler
     /**
      * @var int
      */
-    private $dpi = 300;
+    private int $dpi = 300;
 
     /**
      * @var int
      */
-    private $quality = 95;
+    private int $quality = 95;
 
     private const DPI_PIXEL_SCALE_FACTOR = 0.0393701;
+
+    private bool $detectFaces = false;
+
+    public function __construct()
+    {
+        // This is expcted to have return code 64 (missing argument) and will
+        // fail with other (mostly 1) return codes if some dependency is not
+        // available, and therefore face detection won't work.
+        exec(__DIR__ . '/../../../bin/extractFaces', $output, $returnCode);
+        $this->detectFaces = $returnCode === 64;
+
+        if ($returnCode !== 64) {
+            echo "Warning: Face detection disabled, bin/extractFaces probably misses some dependency.", PHP_EOL;
+        }
+    }
 
     public function setDpi(int $dpi)
     {
@@ -28,7 +43,7 @@ class ImageHandler
 
     public function resize(string $path, int $width, int $height): string
     {
-        $hash = hash('sha256', json_encode([$this->dpi, $this->quality, $path, $width, $height]));
+        $hash = hash('sha256', json_encode([md5_file($path), $this->dpi, $this->quality, $path, $width, $height]));
         $target = __DIR__.'/../../../var/cache/'.$hash.'.png';
         if (file_exists($target)) {
             return $target;
@@ -37,9 +52,13 @@ class ImageHandler
         $width = (int) ($width * $this->dpi * self::DPI_PIXEL_SCALE_FACTOR);
         $height = (int) ($height * $this->dpi * self::DPI_PIXEL_SCALE_FACTOR);
 
-        // curl -X POST "http://localhost:8000/api/v1/detection/detect" -H "Content-Type: multipart/form-data" -H "x-api-key: f08f6993-bd4a-46c0-b27d-72755816bdc6" -F "file=@horizontal.jpg"
         $center = null;
-        if (getenv('COMPREFACE')) {
+        $cachedCenter = __DIR__.'/../../../var/cache/'.$hash.'-center.json';
+        if (file_exists($cachedCenter)) {
+            $center = json_decode(file_get_contents($cachedCenter));
+        }
+
+        if (!$center && $this->detectFaces) {
             $scaledDownTarget = __DIR__.'/../../../var/cache/'.$hash.'-facedetect.jpg';
             $imagick = new \Imagick($path);
             $this->autoRotateImage($imagick);
@@ -47,40 +66,22 @@ class ImageHandler
             $imagick->setImageFormat('jpeg');
             $imagick->writeImage($scaledDownTarget);
 
-            $eol = "\r\n";
-            $mime_boundary = md5(time());
-            $data = '--'.$mime_boundary.$eol;
-            $data .= 'Content-Disposition: form-data; name="file"; filename="image.jpg"'.$eol;
-            $data .= 'Content-Type: image/jpeg'.$eol.$eol;
-            $data .= file_get_contents($scaledDownTarget).$eol;
-            $data .= '--'.$mime_boundary.'--'.$eol.$eol;
-
-            $faces = json_decode(file_get_contents(
-                'http://localhost:8000/api/v1/detection/detect',
-                false,
-                stream_context_create([
-                    'http' => [
-                        'method' => 'POST',
-                        'header' => "Content-Type: multipart/form-data; boundary=$mime_boundary\r\n".
-                            'x-api-key: '.getenv('COMPREFACE')."\r\n",
-                        'ignore_errors' => true,
-                        'content' => $data,
-                    ],
-                ])
-            ));
+            $faces = json_decode(shell_exec(__DIR__ . '/../../../bin/extractFaces ' . escapeshellarg($scaledDownTarget)));
             unlink($scaledDownTarget);
 
-            if ($faces && isset($faces->result)) {
-                foreach ($faces->result as $face) {
-                    $center['x'][] = $face->box->x_min;
-                    $center['x'][] = $face->box->x_max;
-                    $center['y'][] = $face->box->y_min;
-                    $center['y'][] = $face->box->y_max;
+            if ($faces) {
+                foreach ($faces as $face) {
+                    $center['x'][] = $face->x;
+                    $center['x'][] = $face->x + $face->width;
+                    $center['y'][] = $face->y;
+                    $center['y'][] = $face->y + $face->height;
                 }
 
                 $center['x'] = array_sum($center['x']) / count($center['x']) / $imagick->getImageWidth();
                 $center['y'] = array_sum($center['y']) / count($center['y']) / $imagick->getImageHeight();
             }
+
+            file_put_contents($cachedCenter, json_encode($center));
         }
 
         if (!$center) {
@@ -120,7 +121,7 @@ class ImageHandler
 
     public function fit(string $path, int $width, int $height): string
     {
-        $hash = hash('sha256', json_encode([$this->dpi, $this->quality, $path, $width, $height, 'Fit']));
+        $hash = hash('sha256', json_encode([md5_file($path), $this->dpi, $this->quality, $path, $width, $height, 'Fit']));
         $target = __DIR__.'/../../../var/cache/'.$hash.'.png';
         if (file_exists($target)) {
             return $target;
@@ -150,7 +151,7 @@ class ImageHandler
 
     public function blur(string $path)
     {
-        $hash = hash('sha256', json_encode([$this->dpi, $this->quality, $path, 'blurred']));
+        $hash = hash('sha256', json_encode([md5_file($path), $this->dpi, $this->quality, $path, 'blurred']));
         $target = __DIR__.'/../../../var/cache/'.$hash.'.jpeg';
         if (file_exists($target)) {
             return $target;

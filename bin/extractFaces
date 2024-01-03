@@ -1,0 +1,57 @@
+#!/usr/bin/env python
+import cv2
+import sys
+import json
+import os
+import dlib
+
+# Constants for exit codes
+EXIT_CODE_MISSING_ARG = 64
+
+def main(imageFile):
+    image = cv2.imread(imageFile)
+
+    # Load dlib face detector
+    detector = dlib.get_frontal_face_detector();
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    rectangles = detector(image, 1)
+    faces = [convert_and_trim_bb(image, r) for r in rectangles]
+
+    # Sort faces based on the size (largest to smallest)
+    faces = sorted(faces, key=lambda face: face[2] * face[3], reverse=True)
+
+    if (False):
+        # Draw rectangles around each face
+        for (x, y, w, h) in faces:
+            cv2.rectangle(image, (x, y), (x+w, y+h), (255, 0, 0), 2)
+
+        # Save the output image with detected faces
+        cv2.imwrite(os.path.basename(imageFile) + '.faces.jpg', image)
+
+    print(json.dumps([{"x": int(x), "y": int(y), "width": int(w), "height": int(h)} for (x, y, w, h) in faces]))
+
+def convert_and_trim_bb(image, rect):
+    # Extract the starting and ending (x, y)-coordinates of the bounding box
+    startX = rect.left()
+    startY = rect.top()
+    endX = rect.right()
+    endY = rect.bottom()
+
+    # Ensure the bounding box coordinates fall within the spatial dimensions of
+    # the image
+    startX = max(0, min(image.shape[1], startX))
+    startY = max(0, min(image.shape[0], startY))
+    endX = max(0, min(endX, image.shape[1]))
+    endY = max(0, min(endY, image.shape[0]))
+
+    return (startX, startY, endX - startX, endY - startY)
+
+if __name__ == "__main__":
+    # Check if the image path is provided as a command-line argument
+    if len(sys.argv) != 2:
+        print("Error: No image path provided. Please provide the path to an image.")
+        sys.exit(EXIT_CODE_MISSING_ARG)
+
+    # Run the main function with the provided image path
+    main(sys.argv[1])
+
