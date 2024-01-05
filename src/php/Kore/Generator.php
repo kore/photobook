@@ -89,6 +89,7 @@ class Generator
         }
 
         $dpi = $book->production ? 300 : 90;
+        $conversionJobs = [];
         foreach ($book->pages as $number => $page) {
             if ($page->svg && !$page->pdf) {
                 $page->svgHash = md5(file_get_contents($page->svg));
@@ -114,10 +115,16 @@ class Generator
                     }
                 }
 
-                exec("inkscape --export-dpi=$dpi --export-text-to-path --export-area-page --export-type=pdf --export-filename={$page->pdf} {$page->svg}");
+                $conversionJobs[] ="inkscape --export-dpi=$dpi --export-text-to-path --export-area-page --export-type=pdf --export-filename={$page->pdf} {$page->svg}";
                 // unlink($page->svg);
             }
         }
+
+        $parallelExecutor = new \Kore\njq\Executor();
+        $parallelExecutor->run(
+            new \Kore\njq\JobProvider\Shell($conversionJobs),
+            `grep -c processor /proc/cpuinfo` - 1
+        );
 
         exec(
             'pdfunite '.implode(' ', array_map(

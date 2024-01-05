@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd1d928f02bf00f96b75996a2878d219",
+    "content-hash": "d96923f35b45b032b1b47c18def1098a",
     "packages": [
         {
             "name": "kore/data-object",
@@ -43,6 +43,45 @@
                 "source": "https://github.com/kore/DataObject/tree/1.3"
             },
             "time": "2019-09-27T09:41:36+00:00"
+        },
+        {
+            "name": "kore/njq",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kore/njq.git",
+                "reference": "df467bd0085caf25d9a2a318c2a2379dcc9c8743"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kore/njq/zipball/df467bd0085caf25d9a2a318c2a2379dcc9c8743",
+                "reference": "df467bd0085caf25d9a2a318c2a2379dcc9c8743",
+                "shasum": ""
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "phpunit/phpunit": "^10.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kore\\njq\\": [
+                        "src/php",
+                        "tests/php"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Native PHP Job Queue",
+            "support": {
+                "issues": "https://github.com/kore/njq/issues",
+                "source": "https://github.com/kore/njq/tree/master"
+            },
+            "time": "2023-02-17T09:42:39+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -2222,7 +2261,8 @@
     "stability-flags": {
         "symfony/yaml": 0,
         "kore/data-object": 0,
-        "twig/twig": 0
+        "twig/twig": 0,
+        "kore/njq": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
