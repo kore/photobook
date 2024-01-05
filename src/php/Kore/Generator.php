@@ -114,7 +114,7 @@ class Generator
                     }
                 }
 
-                exec("inkscape --export-dpi=$dpi --export-text-to-path --export-area-page --export-pdf={$page->pdf} {$page->svg}");
+                exec("inkscape --export-dpi=$dpi --export-text-to-path --export-area-page --export-type=pdf --export-filename={$page->pdf} {$page->svg}");
                 // unlink($page->svg);
             }
         }
