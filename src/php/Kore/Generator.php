@@ -42,7 +42,7 @@ class Generator
         $configuration = Yaml::parse(file_get_contents($file));
 
         $book = new Book($configuration['book']);
-        $book->dpi = $book->production ? ($book->dpi ?? 300) : 90;
+        $book->dpi = $book->production ? ($book->dpi ?? 300) : 95;
         $book->quality = $book->production ? ($book->quality ?? 90) : 75;
 
         $this->imageHandler->setDpi($book->dpi);
