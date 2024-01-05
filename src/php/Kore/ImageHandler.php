@@ -12,7 +12,7 @@ class ImageHandler
     /**
      * @var int
      */
-    private int $quality = 95;
+    private int $quality = 90;
 
     private const DPI_PIXEL_SCALE_FACTOR = 0.0393701;
 
@@ -90,6 +90,7 @@ class ImageHandler
 
         $imagick = new \Imagick($path);
         $this->autoRotateImage($imagick);
+        $imagick->setImageCompressionQuality($this->quality);
 
         // Find maximum area in image matching the target aspect ratio
         $originalAspectRatio = $imagick->getImageWidth() / $imagick->getImageHeight();
