@@ -42,10 +42,11 @@ class Generator
         $configuration = Yaml::parse(file_get_contents($file));
 
         $book = new Book($configuration['book']);
-        if (!$book->production) {
-            $this->imageHandler->setDpi(90);
-            $this->imageHandler->setQuality(80);
-        }
+        $book->dpi = $book->production ? ($book->dpi ?? 300) : 90;
+        $book->quality = $book->production ? ($book->quality ?? 90) : 75;
+
+        $this->imageHandler->setDpi($book->dpi);
+        $this->imageHandler->setQuality($book->quality);
 
         echo 'Processing pages: ';
         $number = 1;
@@ -88,7 +89,6 @@ class Generator
             }
         }
 
-        $dpi = $book->production ? 300 : 90;
         $conversionJobs = [];
         foreach ($book->pages as $number => $page) {
             if ($page->svg && !$page->pdf) {
@@ -115,7 +115,7 @@ class Generator
                     }
                 }
 
-                $conversionJobs[] ="inkscape --export-dpi=$dpi --export-text-to-path --export-area-page --export-type=pdf --export-filename={$page->pdf} {$page->svg}";
+                $conversionJobs[] ="inkscape --export-dpi=$book->dpi --export-text-to-path --export-area-page --export-type=pdf --export-filename={$page->pdf} {$page->svg}";
                 // unlink($page->svg);
             }
         }

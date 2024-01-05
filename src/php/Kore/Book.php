@@ -10,6 +10,8 @@ class Book extends DataObject
     public $baseDir;
     public $format;
     public $production = false;
+    public $dpi = null;
+    public $quality = null;
     public $pages = [];
 
     public function __construct(array $properties = [])

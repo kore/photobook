@@ -44,7 +44,7 @@ class ImageHandler
     public function resize(string $path, int $width, int $height): string
     {
         $hash = hash('sha256', json_encode([md5_file($path), $this->dpi, $this->quality, $path, $width, $height]));
-        $target = __DIR__.'/../../../var/cache/'.$hash.'.png';
+        $target = __DIR__.'/../../../var/cache/'.$hash.'.jpg';
         if (file_exists($target)) {
             return $target;
         }
